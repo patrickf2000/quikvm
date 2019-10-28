@@ -10,6 +10,7 @@ set(ASM_SRC
 set(VM_SRC
 	vm/main.cpp
 	vm/reader.cpp
+	vm/vm.cpp
 )
 
 add_compile_options(-std=c++11)
