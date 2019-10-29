@@ -4,6 +4,7 @@ project(vm2)
 set(ASM_SRC
 	assembler/main.cpp
 	assembler/writer.cpp
+	assembler/assembler.cpp
 )
 
 set(VM_SRC

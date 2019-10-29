@@ -1,10 +1,12 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
 
 #include <bytecode.hh>
 
 #include "writer.hh"
+#include "assembler.hh"
 
 int main(int argc, char *argv[]) {
 	if (argc == 1) {
@@ -22,8 +24,15 @@ int main(int argc, char *argv[]) {
 	}
 	
 	BinWriter writer("out.bin");
+	std::vector<std::string> contents;
 	
 	while (std::getline(reader, ln)) {
+		contents.push_back(ln);
+	}
+	
+	contents = pass1(contents);
+	
+	for (auto ln : contents) {
 		auto pos = ln.find_first_of(" ");
 		auto op = ln.substr(0, pos);
 		auto arg = ln.substr(pos+1, ln.length()-1);
