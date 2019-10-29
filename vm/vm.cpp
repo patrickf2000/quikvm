@@ -44,19 +44,24 @@ void load(const char *path) {
 
 //Runs the virtual machine
 void run() {
-	std::stack<std::string> runtime;
+	std::stack<int> int_stack;
+	std::stack<double> flt_stack;
+	std::stack<std::string> str_stack;
 	int counter = 0;
 	
 	while (counter < instructions.size()) {
 		auto i = instructions.at(counter);
 		
 		switch (i.opcode) {
-			case ByteCode::I_LOAD: runtime.push(std::to_string(i.i_arg)); break;
-			case ByteCode::I_PRINT: std::cout << runtime.top() << std::endl; break;
-			case ByteCode::D_LOAD: runtime.push(std::to_string(i.d_arg)); break;
-			case ByteCode::D_PRINT: std::cout << runtime.top() << std::endl; break;
-			case ByteCode::S_LOAD: runtime.push(i.s_arg); break;
-			case ByteCode::S_PRINT: std::cout << runtime.top() << std::endl; break;
+			case ByteCode::I_LOAD: int_stack.push(i.i_arg); break;
+			case ByteCode::I_PRINT: std::cout << int_stack.top() << std::endl; break;
+			
+			case ByteCode::D_LOAD: flt_stack.push(i.d_arg); break;
+			case ByteCode::D_PRINT: std::cout << flt_stack.top() << std::endl; break;
+			
+			case ByteCode::S_LOAD: str_stack.push(i.s_arg); break;
+			case ByteCode::S_PRINT: std::cout << str_stack.top() << std::endl; break;
+			
 			case ByteCode::JMP: counter = i.i_arg; continue;
 			case ByteCode::EXIT: std::exit(0);
 		}
