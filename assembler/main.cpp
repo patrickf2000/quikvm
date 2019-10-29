@@ -5,7 +5,6 @@
 #include <bytecode.hh>
 
 #include "writer.hh"
-#include "parser.hh"
 
 int main(int argc, char *argv[]) {
 	if (argc == 1) {
@@ -25,8 +24,9 @@ int main(int argc, char *argv[]) {
 	BinWriter writer("out.bin");
 	
 	while (std::getline(reader, ln)) {
-		auto op = get_operand(ln);
-		auto arg = get_arg(ln);
+		auto pos = ln.find_first_of(" ");
+		auto op = ln.substr(0, pos);
+		auto arg = ln.substr(pos+1, ln.length()-1);
 		
 		//Integer operations
 		if (op == "i_load") {

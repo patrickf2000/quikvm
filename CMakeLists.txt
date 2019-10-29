@@ -3,7 +3,6 @@ project(vm2)
 
 set(ASM_SRC
 	assembler/main.cpp
-	assembler/parser.cpp
 	assembler/writer.cpp
 )
 
