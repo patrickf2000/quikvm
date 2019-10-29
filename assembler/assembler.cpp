@@ -2,12 +2,11 @@
 
 std::map<std::string, int> symbols;
 
-//TODO: See if we can clear this up, this is a lot of looping
-std::vector<std::string> pass1(std::vector<std::string> contents) {
+void pass1(std::vector<std::string> *contents) {
 	std::vector<std::string> ret;
 
-	for (int i = 0; i<contents.size(); i++) {
-		auto ln = contents.at(i);
+	for (int i = 0; i<contents->size(); i++) {
+		auto ln = contents->at(i);
 		auto pos = ln.find_first_of(" ");
 		auto op = ln.substr(0, pos);
 		auto arg = ln.substr(pos+1, ln.length()-1);
@@ -17,15 +16,12 @@ std::vector<std::string> pass1(std::vector<std::string> contents) {
 			ln = op + " " + std::to_string(i);
 		}
 		
-		ret.push_back(ln);
+		contents->insert(contents->begin()+i+1, ln);
+		contents->erase(contents->begin()+i);
 	}
-	
-	contents.clear();
-	contents = ret;
-	ret.clear();
 
-	for (int i = 0; i<contents.size(); i++) {
-		auto ln = contents.at(i);
+	for (int i = 0; i<contents->size(); i++) {
+		auto ln = contents->at(i);
 		auto pos = ln.find_first_of(" ");
 		auto op = ln.substr(0, pos);
 		auto arg = ln.substr(pos+1, ln.length()-1);
@@ -35,8 +31,7 @@ std::vector<std::string> pass1(std::vector<std::string> contents) {
 			ln += std::to_string(symbols.at(arg));
 		}
 		
-		ret.push_back(ln);
+		contents->insert(contents->begin()+i+1, ln);
+		contents->erase(contents->begin()+i);
 	}
-	
-	return ret;
 }

@@ -6,4 +6,4 @@
 
 extern std::map<std::string, int> symbols;
 
-std::vector<std::string> pass1(std::vector<std::string> contents);
+void pass1(std::vector<std::string> *contents);

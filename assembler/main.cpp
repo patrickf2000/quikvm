@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 		contents.push_back(ln);
 	}
 	
-	contents = pass1(contents);
+	pass1(&contents);
 	
 	for (auto ln : contents) {
 		auto pos = ln.find_first_of(" ");
