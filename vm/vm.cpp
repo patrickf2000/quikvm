@@ -4,6 +4,7 @@
 #include <stack>
 #include <vector>
 #include <map>
+#include <set>
 
 #include <bytecode.hh>
 
@@ -18,6 +19,8 @@ struct Instr {
 };
 
 std::vector<Instr> instructions;
+std::set<unsigned char> int_codes = {I_LOAD, I_CMP, I_VAR, I_STORE, I_LOAD_VAR,
+			LBL, JMP, JE};
 
 //Loads the file
 void load(const char *path) {
@@ -27,17 +30,12 @@ void load(const char *path) {
 	while (!reader.is_eof()) {
 		i.opcode = reader.read_opcode();
 		
-		if (i.opcode == ByteCode::I_LOAD || i.opcode == ByteCode::I_CMP
-			|| i.opcode == ByteCode::I_VAR || i.opcode == ByteCode::I_STORE
-			|| i.opcode == ByteCode::I_LOAD_VAR) {
+		if (int_codes.find(i.opcode) != int_codes.end()) {
 			i.i_arg = reader.read_int();
 		} else if (i.opcode == ByteCode::D_LOAD) {
 			i.d_arg = reader.read_double();
 		} else if (i.opcode == ByteCode::S_LOAD) {
 			i.s_arg = reader.read_str();
-		} else if (i.opcode == ByteCode::LBL || i.opcode == ByteCode::JMP
-				|| i.opcode == ByteCode::JE) {
-			i.i_arg = reader.read_int();
 		}
 		
 		instructions.push_back(i);
