@@ -58,6 +58,14 @@ int main(int argc, char *argv[]) {
 			writer.write_str(s.c_str());
 		} else if (op == "s_print") {
 			writer.write_opcode(ByteCode::S_PRINT);
+			
+		//Flow control
+		} else if (op == "lbl") {
+			writer.write_opcode(ByteCode::LBL);
+			writer.write_int(std::stoi(arg));
+		} else if (op == "jmp") {
+			writer.write_opcode(ByteCode::JMP);
+			writer.write_int(std::stoi(arg));
 		
 		//Other
 		} else if (op == "exit") {

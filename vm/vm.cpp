@@ -32,6 +32,8 @@ void load(const char *path) {
 			i.d_arg = reader.read_double();
 		} else if (i.opcode == ByteCode::S_LOAD) {
 			i.s_arg = reader.read_str();
+		} else if (i.opcode == ByteCode::LBL || i.opcode == ByteCode::JMP) {
+			i.i_arg = reader.read_int();
 		}
 		
 		instructions.push_back(i);
@@ -43,8 +45,11 @@ void load(const char *path) {
 //Runs the virtual machine
 void run() {
 	std::stack<std::string> runtime;
+	int counter = 0;
 	
-	for (auto i : instructions) {
+	while (counter < instructions.size()) {
+		auto i = instructions.at(counter);
+		
 		switch (i.opcode) {
 			case ByteCode::I_LOAD: runtime.push(std::to_string(i.i_arg)); break;
 			case ByteCode::I_PRINT: std::cout << runtime.top() << std::endl; break;
@@ -52,7 +57,10 @@ void run() {
 			case ByteCode::D_PRINT: std::cout << runtime.top() << std::endl; break;
 			case ByteCode::S_LOAD: runtime.push(i.s_arg); break;
 			case ByteCode::S_PRINT: std::cout << runtime.top() << std::endl; break;
+			case ByteCode::JMP: counter = i.i_arg; continue;
 			case ByteCode::EXIT: std::exit(0);
 		}
+		
+		++counter;
 	}
 }
