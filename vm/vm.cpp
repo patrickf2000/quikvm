@@ -3,6 +3,7 @@
 #include <fstream>
 #include <stack>
 #include <vector>
+#include <map>
 
 #include <bytecode.hh>
 
@@ -26,7 +27,9 @@ void load(const char *path) {
 	while (!reader.is_eof()) {
 		i.opcode = reader.read_opcode();
 		
-		if (i.opcode == ByteCode::I_LOAD || i.opcode == ByteCode::I_CMP) {
+		if (i.opcode == ByteCode::I_LOAD || i.opcode == ByteCode::I_CMP
+			|| i.opcode == ByteCode::I_VAR || i.opcode == ByteCode::I_STORE
+			|| i.opcode == ByteCode::I_LOAD_VAR) {
 			i.i_arg = reader.read_int();
 		} else if (i.opcode == ByteCode::D_LOAD) {
 			i.d_arg = reader.read_double();
@@ -45,9 +48,12 @@ void load(const char *path) {
 
 //Runs the virtual machine
 void run() {
+	std::map<int, std::string> memory;
+
 	std::stack<int> int_stack;
 	std::stack<double> flt_stack;
 	std::stack<std::string> str_stack;
+	
 	int cmp = 0;
 	int counter = 0;
 	
@@ -57,6 +63,15 @@ void run() {
 		switch (i.opcode) {
 			case ByteCode::I_LOAD: int_stack.push(i.i_arg); break;
 			case ByteCode::I_PRINT: std::cout << int_stack.top() << std::endl; break;
+			case ByteCode::I_VAR: memory.insert(std::pair<int, std::string>(i.i_arg, "")); break;
+			case ByteCode::I_STORE: {
+					memory[i.i_arg] = std::to_string(int_stack.top()); 
+					int_stack.pop();
+				} break;
+			case ByteCode::I_LOAD_VAR: {
+					int item = std::stoi(memory[i.i_arg]);
+					int_stack.push(item);
+				} break;
 			case ByteCode::I_INPUT: {
 					int i;
 					std::cin >> i;

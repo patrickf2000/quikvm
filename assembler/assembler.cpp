@@ -4,9 +4,11 @@
 #include "writer.hh"
 
 std::map<std::string, int> symbols;
+std::map<std::string, int> vars;
 
 void pass1(std::vector<std::string> *contents) {
 	std::vector<std::string> ret;
+	int var_index = 0;
 
 	for (int i = 0; i<contents->size(); i++) {
 		auto ln = contents->at(i);
@@ -17,6 +19,10 @@ void pass1(std::vector<std::string> *contents) {
 		if (op == "lbl") {
 			symbols.insert(std::pair<std::string, int>(arg, i));
 			ln = op + " " + std::to_string(i);
+		} else if (op == "i_var") {
+			vars.insert(std::pair<std::string, int>(arg, var_index));
+			ln = op + " " + std::to_string(var_index);
+			++var_index;
 		}
 		
 		contents->insert(contents->begin()+i+1, ln);
@@ -32,6 +38,9 @@ void pass1(std::vector<std::string> *contents) {
 		if (op == "jmp" || op == "je") {
 			ln = op + " ";
 			ln += std::to_string(symbols.at(arg));
+		} else if (op == "i_store" || op == "i_load_var") {
+			ln = op + " ";
+			ln += std::to_string(vars.at(arg));
 		}
 		
 		contents->insert(contents->begin()+i+1, ln);
@@ -75,6 +84,15 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 			writer.write_opcode(ByteCode::I_INPUT);
 		} else if (op == "i_cmp") {
 			writer.write_opcode(ByteCode::I_CMP);
+			writer.write_int(std::stoi(arg));
+		} else if (op == "i_var") {
+			writer.write_opcode(ByteCode::I_VAR);
+			writer.write_int(std::stoi(arg));
+		} else if (op == "i_store") {
+			writer.write_opcode(ByteCode::I_STORE);
+			writer.write_int(std::stoi(arg));
+		} else if (op == "i_load_var") {
+			writer.write_opcode(ByteCode::I_LOAD_VAR);
 			writer.write_int(std::stoi(arg));
 			
 		//Double operations
