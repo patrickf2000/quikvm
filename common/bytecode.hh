@@ -3,12 +3,49 @@
 enum ByteCode {
 	//General
 	EXIT = 0x10,
+	LBL = 0x11,
 	
 	//Integer
 	I_LOAD = 0x20,
-	I_PRINT = 0x21,
+	I_STORE = 0x21,
+	I_VAR = 0x22,
+	I_LOAD_VAR = 0x23,
+	I_ADD = 0x24,
+	I_SUB = 0x25,
+	I_MUL = 0x26,
+	I_DIV = 0x27,
+	I_MOD = 0x28,
+	I_PRINT = 0x29,
+	I_INPUT = 0x30,
 	
 	//Double (floating point)
-	D_LOAD = 0x30,
-	D_PRINT = 0x31,
+	D_LOAD = 0x40,
+	D_STORE = 0x41,
+	D_VAR = 0x42,
+	D_LOAD_VAR = 0x43,
+	D_ADD = 0x44,
+	D_SUB = 0x45,
+	D_MUL = 0x46,
+	D_DIV = 0x47,
+	D_MOD = 0x48,
+	D_PRINT = 0x49,
+	D_INPUT = 0x50,
+	
+	//Strings
+	S_LOAD = 0x60,
+	S_PRINT = 0x61,
+	
+	//Flow control
+	I_CMP = 0xA1,
+	D_CMP = 0xA2,
+	JMP = 0xA3,
+	JE = 0xA4,
+	JNE = 0xA5,
+	JG = 0xA6,
+	JL = 0xA7,
+	JGE = 0xA8,
+	JLE = 0xA9,
+	
+	//Thread control
+	NEW_THREAD = 0xB1
 };
