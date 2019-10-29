@@ -28,16 +28,29 @@ int main(int argc, char *argv[]) {
 		auto op = get_operand(ln);
 		auto arg = get_arg(ln);
 		
+		//Integer operations
 		if (op == "i_load") {
 			writer.write_opcode(ByteCode::I_LOAD);
 			writer.write_int(std::stoi(arg));
 		} else if (op == "i_print") {
 			writer.write_opcode(ByteCode::I_PRINT);
+			
+		//Double operations
 		} else if (op == "d_load") {
 			writer.write_opcode(ByteCode::D_LOAD);
 			writer.write_double(std::stod(arg));
 		} else if (op == "d_print") {
 			writer.write_opcode(ByteCode::D_PRINT);
+			
+		//String operations
+		} else if (op == "s_load") {
+			writer.write_opcode(ByteCode::S_LOAD);
+			auto s = arg.substr(1, arg.length()-2);
+			writer.write_str(s.c_str());
+		} else if (op == "s_print") {
+			writer.write_opcode(ByteCode::S_PRINT);
+		
+		//Other
 		} else if (op == "exit") {
 			writer.write_opcode(ByteCode::EXIT);
 		}

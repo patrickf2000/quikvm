@@ -42,6 +42,15 @@ double BinReader::read_double() {
 	return arg;
 }
 
+//Read a string
+std::string BinReader::read_str() {
+	int len = read_int();
+	char str[len];
+	reader.read((char *)str, sizeof(char)*len);
+	str[len] = '\0';
+	return std::string(str);
+}
+
 //Close everything
 void BinReader::close() {
 	reader.close();

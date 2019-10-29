@@ -1,6 +1,7 @@
 #pragma once
 
 #include <fstream>
+#include <string>
 
 class BinReader {
 public:
@@ -9,6 +10,7 @@ public:
 	unsigned char read_opcode();
 	int read_int();
 	double read_double();
+	std::string read_str();
 	void close();
 private:
 	std::ifstream reader;
