@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 	reader.close();
 	
 	pass1(&contents);
-	pass2(&contents);
+	pass2(&contents, input);
 	
 	return 0;
 }

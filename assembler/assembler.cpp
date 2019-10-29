@@ -39,9 +39,26 @@ void pass1(std::vector<std::string> *contents) {
 	}
 }
 
-void pass2(std::vector<std::string> *contents) {
-	BinWriter writer("out.bin");
+void pass2(std::vector<std::string> *contents, std::string path) {
+	//First, build the path and open the writer
+	std::string name = "";
 	
+	int spos = path.find_last_of("/");
+	if (spos == -1) {
+		spos = 0;
+	}
+	
+	int ppos = path.find_last_of(".");
+	if (ppos == -1) {
+		ppos = path.length()-1;
+	}
+	
+	name = path.substr(spos+1, (ppos-spos));
+	path = name + "bin";
+	
+	BinWriter writer(path.c_str());
+	
+	//Now, assemble
 	for (int i = 0; i<contents->size(); i++) {
 		auto ln = contents->at(i);
 		auto pos = ln.find_first_of(" ");
