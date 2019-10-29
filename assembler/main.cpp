@@ -45,6 +45,9 @@ int main(int argc, char *argv[]) {
 			writer.write_opcode(ByteCode::I_PRINT);
 		} else if (op == "i_input") {
 			writer.write_opcode(ByteCode::I_INPUT);
+		} else if (op == "i_cmp") {
+			writer.write_opcode(ByteCode::I_CMP);
+			writer.write_int(std::stoi(arg));
 			
 		//Double operations
 		} else if (op == "d_load") {
@@ -72,7 +75,10 @@ int main(int argc, char *argv[]) {
 		} else if (op == "jmp") {
 			writer.write_opcode(ByteCode::JMP);
 			writer.write_int(std::stoi(arg));
-		
+		} else if (op == "je") {
+			writer.write_opcode(ByteCode::JE);
+			writer.write_int(std::stoi(arg));
+			
 		//Other
 		} else if (op == "exit") {
 			writer.write_opcode(ByteCode::EXIT);

@@ -30,7 +30,7 @@ std::vector<std::string> pass1(std::vector<std::string> contents) {
 		auto op = ln.substr(0, pos);
 		auto arg = ln.substr(pos+1, ln.length()-1);
 
-		if (op == "jmp") {
+		if (op == "jmp" || op == "je") {
 			ln = op + " ";
 			ln += std::to_string(symbols.at(arg));
 		}
