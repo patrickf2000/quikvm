@@ -55,12 +55,23 @@ void run() {
 		switch (i.opcode) {
 			case ByteCode::I_LOAD: int_stack.push(i.i_arg); break;
 			case ByteCode::I_PRINT: std::cout << int_stack.top() << std::endl; break;
+			case ByteCode::I_INPUT: {
+					int i;
+					std::cin >> i;
+					int_stack.push(i);
+				} break;
 			
 			case ByteCode::D_LOAD: flt_stack.push(i.d_arg); break;
 			case ByteCode::D_PRINT: std::cout << flt_stack.top() << std::endl; break;
+			case ByteCode::D_INPUT: {
+					double d;
+					std::cin >> d;
+					flt_stack.push(d);
+				} break;
 			
 			case ByteCode::S_LOAD: str_stack.push(i.s_arg); break;
 			case ByteCode::S_PRINT: std::cout << str_stack.top() << std::endl; break;
+			case ByteCode::S_POP: str_stack.pop(); break;
 			
 			case ByteCode::JMP: counter = i.i_arg; continue;
 			case ByteCode::EXIT: std::exit(0);

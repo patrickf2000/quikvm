@@ -34,6 +34,7 @@ enum ByteCode {
 	//Strings
 	S_LOAD = 0x60,
 	S_PRINT = 0x61,
+	S_POP = 0x62,
 	
 	//Flow control
 	I_CMP = 0xA1,
