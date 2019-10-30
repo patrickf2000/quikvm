@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
 	}
 	
 	load(argv[1]);
-	run();
+	run(0);
 	
 	return 0;
 }

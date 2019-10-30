@@ -5,6 +5,7 @@ enum ByteCode {
 	//General
 	EXIT = 0x10,
 	LBL = 0x11,
+	SLEEP = 0x12,
 	
 	//Integer
 	I_LOAD = 0x20,

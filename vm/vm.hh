@@ -1,4 +1,4 @@
 #pragma once
 
 void load(const char *path);
-void run();
+void run(int pc);

@@ -5,6 +5,8 @@
 #include <vector>
 #include <map>
 #include <set>
+#include <thread>
+#include <unistd.h>
 
 #include <bytecode.hh>
 
@@ -21,7 +23,8 @@ struct Instr {
 std::vector<Instr> instructions;
 std::set<unsigned char> int_codes = {I_LOAD, I_CMP, I_VAR, I_STORE, I_LOAD_VAR,
 			D_CMP, D_VAR, D_STORE, D_LOAD_VAR,
-			LBL, JMP, JE, JNE, JG, JL, JGE, JLE};
+			LBL, JMP, JE, JNE, JG, JL, JGE, JLE,
+			SLEEP, NEW_THREAD};
 
 //Loads the file
 void load(const char *path) {
@@ -46,7 +49,7 @@ void load(const char *path) {
 }
 
 //Runs the virtual machine
-void run() {
+void run(int pc) {
 	std::map<int, std::string> memory;
 
 	std::stack<int> int_stack;
@@ -54,7 +57,7 @@ void run() {
 	std::stack<std::string> str_stack;
 	
 	int cmp = 0;
-	int counter = 0;
+	int counter = pc;
 	
 	while (counter < instructions.size()) {
 		auto i = instructions.at(counter);
@@ -187,6 +190,13 @@ void run() {
 						continue;
 					}
 				} break;
+				
+			case ByteCode::SLEEP: sleep(i.i_arg); break;
+			case ByteCode::NEW_THREAD: {
+					std::thread thr(run, i.i_arg); 
+					thr.join();
+				} break;
+				
 			case ByteCode::EXIT: std::exit(0);
 		}
 		
