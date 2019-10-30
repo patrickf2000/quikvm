@@ -29,10 +29,9 @@ enum ByteCode {
 	D_SUB = 0x45,
 	D_MUL = 0x46,
 	D_DIV = 0x47,
-	D_MOD = 0x48,
-	D_PRINT = 0x49,
-	D_INPUT = 0x50,
-	D_POP = 0x51,
+	D_PRINT = 0x48,
+	D_INPUT = 0x49,
+	D_POP = 0x50,
 	
 	//Strings
 	S_LOAD = 0x60,

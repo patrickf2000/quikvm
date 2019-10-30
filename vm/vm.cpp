@@ -123,6 +123,27 @@ void run() {
 					std::cin >> d;
 					flt_stack.push(d);
 				} break;
+				
+			case ByteCode::D_ADD:
+			case ByteCode::D_SUB:
+			case ByteCode::D_MUL:
+			case ByteCode::D_DIV: {
+					double no1 = flt_stack.top();
+					flt_stack.pop();
+					double no2 = flt_stack.top();
+					flt_stack.pop();
+					double answer = 0;
+					
+					switch (i.opcode) {
+						case ByteCode::D_ADD: answer = no1+no2; break;
+						case ByteCode::D_SUB: answer = no1-no2; break;
+						case ByteCode::D_MUL: answer = no1*no2; break;
+						case ByteCode::D_DIV: answer = no1/no2; break;
+					}
+					
+					flt_stack.push(answer);
+				} break;
+			case ByteCode::D_POP: flt_stack.pop(); break;
 			
 			case ByteCode::S_LOAD: str_stack.push(i.s_arg); break;
 			case ByteCode::S_PRINT: std::cout << str_stack.top() << std::endl; break;

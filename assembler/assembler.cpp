@@ -144,8 +144,6 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 			writer.write_opcode(ByteCode::D_MUL);
 		} else if (op == "d_div") {
 			writer.write_opcode(ByteCode::D_DIV);
-		} else if (op == "d_mod") {
-			writer.write_opcode(ByteCode::D_MOD);
 		} else if (op == "d_pop") {
 			writer.write_opcode(ByteCode::D_POP);
 			
