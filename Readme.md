@@ -33,6 +33,11 @@ These are the supported instructions:
 * S_POP   
 * JMP   
 * JE   
+* JNE   
+* JG   
+* JL   
+* JGE   
+* JLE   
 * LBL   
 * EXIT   
 
