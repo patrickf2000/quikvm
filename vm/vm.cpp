@@ -61,7 +61,8 @@ void run() {
 		switch (i.opcode) {
 			case ByteCode::I_LOAD: int_stack.push(i.i_arg); break;
 			case ByteCode::I_PRINT: std::cout << int_stack.top() << std::endl; break;
-			case ByteCode::I_VAR: memory.insert(std::pair<int, std::string>(i.i_arg, "")); break;
+			case ByteCode::I_VAR:
+			case ByteCode::D_VAR: memory.insert(std::pair<int, std::string>(i.i_arg, "")); break;
 			case ByteCode::I_STORE: {
 					memory[i.i_arg] = std::to_string(int_stack.top()); 
 					int_stack.pop();
@@ -86,6 +87,14 @@ void run() {
 			
 			case ByteCode::D_LOAD: flt_stack.push(i.d_arg); break;
 			case ByteCode::D_PRINT: std::cout << flt_stack.top() << std::endl; break;
+			case ByteCode::D_STORE: {
+					memory[i.i_arg] = std::to_string(flt_stack.top()); 
+					flt_stack.pop();
+				} break;
+			case ByteCode::D_LOAD_VAR: {
+					double item = std::stod(memory[i.i_arg]);
+					flt_stack.push(item);
+				} break;
 			case ByteCode::D_INPUT: {
 					double d;
 					std::cin >> d;

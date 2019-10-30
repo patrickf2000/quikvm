@@ -19,7 +19,7 @@ void pass1(std::vector<std::string> *contents) {
 		if (op == "lbl") {
 			symbols.insert(std::pair<std::string, int>(arg, i));
 			ln = op + " " + std::to_string(i);
-		} else if (op == "i_var") {
+		} else if (op == "i_var" || op == "d_var") {
 			vars.insert(std::pair<std::string, int>(arg, var_index));
 			ln = op + " " + std::to_string(var_index);
 			++var_index;
@@ -38,7 +38,8 @@ void pass1(std::vector<std::string> *contents) {
 		if (op == "jmp" || op == "je") {
 			ln = op + " ";
 			ln += std::to_string(symbols.at(arg));
-		} else if (op == "i_store" || op == "i_load_var") {
+		} else if (op == "i_store" || op == "i_load_var"
+				|| op == "d_store" || op == "d_load_var") {
 			ln = op + " ";
 			ln += std::to_string(vars.at(arg));
 		}
@@ -103,6 +104,15 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 			writer.write_opcode(ByteCode::D_PRINT);
 		} else if (op == "d_input") {
 			writer.write_opcode(ByteCode::D_INPUT);
+		} else if (op == "d_var") {
+			writer.write_opcode(ByteCode::D_VAR);
+			writer.write_int(std::stoi(arg));
+		} else if (op == "d_store") {
+			writer.write_opcode(ByteCode::D_STORE);
+			writer.write_int(std::stoi(arg));
+		} else if (op == "d_load_var") {
+			writer.write_opcode(ByteCode::D_LOAD_VAR);
+			writer.write_int(std::stoi(arg));
 			
 		//String operations
 		} else if (op == "s_load") {
