@@ -84,6 +84,29 @@ void run() {
 					else
 						cmp = 0;
 				} break;
+
+			case ByteCode::I_ADD:
+			case ByteCode::I_SUB:
+			case ByteCode::I_MUL:
+			case ByteCode::I_DIV:
+			case ByteCode::I_MOD: {
+					int no1 = int_stack.top();
+					int_stack.pop();
+					int no2 = int_stack.top();
+					int_stack.pop();
+					int answer = 0;
+					
+					switch (i.opcode) {
+						case ByteCode::I_ADD: answer = no1+no2; break;
+						case ByteCode::I_SUB: answer = no1-no2; break;
+						case ByteCode::I_MUL: answer = no1*no2; break;
+						case ByteCode::I_DIV: answer = no1/no2; break;
+						default: answer = no1%no2;
+					}
+					
+					int_stack.push(answer);
+				} break;
+			case ByteCode::I_POP: int_stack.pop(); break;
 			
 			case ByteCode::D_LOAD: flt_stack.push(i.d_arg); break;
 			case ByteCode::D_PRINT: std::cout << flt_stack.top() << std::endl; break;

@@ -17,6 +17,7 @@ enum ByteCode {
 	I_MOD = 0x28,
 	I_PRINT = 0x29,
 	I_INPUT = 0x30,
+	I_POP = 0x31,
 	
 	//Double (floating point)
 	D_LOAD = 0x40,

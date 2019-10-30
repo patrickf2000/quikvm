@@ -95,6 +95,18 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 		} else if (op == "i_load_var") {
 			writer.write_opcode(ByteCode::I_LOAD_VAR);
 			writer.write_int(std::stoi(arg));
+		} else if (op == "i_add") {
+			writer.write_opcode(ByteCode::I_ADD);
+		} else if (op == "i_sub") {
+			writer.write_opcode(ByteCode::I_SUB);
+		} else if (op == "i_mul") {
+			writer.write_opcode(ByteCode::I_MUL);
+		} else if (op == "i_div") {
+			writer.write_opcode(ByteCode::I_DIV);
+		} else if (op == "i_mod") {
+			writer.write_opcode(ByteCode::I_MOD);
+		} else if (op == "i_pop") {
+			writer.write_opcode(ByteCode::I_POP);
 			
 		//Double operations
 		} else if (op == "d_load") {
