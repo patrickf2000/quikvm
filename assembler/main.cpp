@@ -23,6 +23,12 @@ int main(int argc, char *argv[]) {
 	std::vector<std::string> contents;
 	
 	while (std::getline(reader, ln)) {
+		ln.erase(0, ln.find_first_not_of(" \t"));
+		ln.erase(ln.find_last_not_of(" \t")+1);
+		
+		if (ln[0] == ';') continue;
+		if (ln.length() == 0) continue;
+		
 		contents.push_back(ln);
 	}
 	

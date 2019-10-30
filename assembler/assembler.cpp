@@ -8,6 +8,7 @@
 std::map<std::string, int> symbols;
 std::map<std::string, int> vars;
 
+//Assign numbers to labels and variables
 void pass1(std::vector<std::string> *contents) {
 	std::vector<std::string> ret;
 	int var_index = 0;
@@ -57,6 +58,7 @@ void pass1(std::vector<std::string> *contents) {
 	}*/
 }
 
+//Assemble and write the binary file
 void pass2(std::vector<std::string> *contents, std::string path) {
 	//First, build the path and open the writer
 	std::string name = "";
