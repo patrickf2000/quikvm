@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstdlib>
 
+#include <bytecode.hh>
+
 #include "reader.hh"
 
 //Open our input stream
@@ -11,6 +13,20 @@ BinReader::BinReader(const char *path) {
 		std::cout << "Error: Unable to open input!" << std::endl;
 		std::exit(1);
 	}
+	
+	//Check the header
+	char head[5];
+	reader.read(head, 5);
+	
+	unsigned char header[] = {'Q', 'U', 'I', 'C', 'K'};
+	
+	for (int i = 0; i<5; i++) {
+		if ((unsigned char)head[i] != header[i]) {
+			std::cout << "Error: Invalid input file!" << std::endl;
+			std::cout << "The header does not match." << std::endl;
+			std::exit(1);
+		}
+	}	
 }
 
 //Returns whether we are at the end of our file

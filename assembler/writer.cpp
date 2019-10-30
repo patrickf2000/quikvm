@@ -6,6 +6,9 @@
 //Set up the writer
 BinWriter::BinWriter(std::string path) {
 	writer = std::ofstream(path.c_str(), std::ios::binary);
+	
+	unsigned char header[] = {'Q', 'U', 'I', 'C', 'K'};
+	writer << header;
 }
 
 //Write an opcode

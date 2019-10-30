@@ -1,5 +1,6 @@
 #pragma once
 
+//The bytecode
 enum ByteCode {
 	//General
 	EXIT = 0x10,
