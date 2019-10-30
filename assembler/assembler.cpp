@@ -124,6 +124,9 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 			writer.write_opcode(ByteCode::D_PRINT);
 		} else if (op == "d_input") {
 			writer.write_opcode(ByteCode::D_INPUT);
+		} else if (op == "d_cmp") {
+			writer.write_opcode(ByteCode::D_CMP);
+			writer.write_int(std::stoi(arg));
 		} else if (op == "d_var") {
 			writer.write_opcode(ByteCode::D_VAR);
 			writer.write_int(std::stoi(arg));
@@ -133,6 +136,18 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 		} else if (op == "d_load_var") {
 			writer.write_opcode(ByteCode::D_LOAD_VAR);
 			writer.write_int(std::stoi(arg));
+		} else if (op == "d_add") {
+			writer.write_opcode(ByteCode::D_ADD);
+		} else if (op == "d_sub") {
+			writer.write_opcode(ByteCode::D_SUB);
+		} else if (op == "d_mul") {
+			writer.write_opcode(ByteCode::D_MUL);
+		} else if (op == "d_div") {
+			writer.write_opcode(ByteCode::D_DIV);
+		} else if (op == "d_mod") {
+			writer.write_opcode(ByteCode::D_MOD);
+		} else if (op == "d_pop") {
+			writer.write_opcode(ByteCode::D_POP);
 			
 		//String operations
 		} else if (op == "s_load") {
