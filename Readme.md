@@ -26,6 +26,12 @@ These are the supported instructions:
 * D_STORE   
 * D_LOAD_VAR   
 * D_INPUT   
+* D_CMP   
+* D_ADD   
+* D_SUB   
+* I_MUL   
+* D_DIV   
+* D_POP   
 * S_LOAD   
 * S_PRINT   
 * S_POP   
