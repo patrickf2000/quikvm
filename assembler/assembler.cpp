@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <bytecode.hh>
 
 #include "assembler.hh"
@@ -35,7 +37,8 @@ void pass1(std::vector<std::string> *contents) {
 		auto op = ln.substr(0, pos);
 		auto arg = ln.substr(pos+1, ln.length()-1);
 
-		if (op == "jmp" || op == "je") {
+		if (op == "jmp" || op == "je" || op == "jne" || op == "jg"
+			|| op == "jl" || op == "jge" || op == "jle") {
 			ln = op + " ";
 			ln += std::to_string(symbols.at(arg));
 		} else if (op == "i_store" || op == "i_load_var"
@@ -47,6 +50,11 @@ void pass1(std::vector<std::string> *contents) {
 		contents->insert(contents->begin()+i+1, ln);
 		contents->erase(contents->begin()+i);
 	}
+	
+	//debug
+	/*for (int i = 0; i<contents->size(); i++) {
+		std::cout << "[DB] " << i << ": " << contents->at(i) << std::endl;
+	}*/
 }
 
 void pass2(std::vector<std::string> *contents, std::string path) {
@@ -145,6 +153,21 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 			writer.write_int(std::stoi(arg));
 		} else if (op == "je") {
 			writer.write_opcode(ByteCode::JE);
+			writer.write_int(std::stoi(arg));
+		} else if (op == "jne") {
+			writer.write_opcode(ByteCode::JNE);
+			writer.write_int(std::stoi(arg));
+		} else if (op == "jg") {
+			writer.write_opcode(ByteCode::JG);
+			writer.write_int(std::stoi(arg));
+		} else if (op == "jl") {
+			writer.write_opcode(ByteCode::JL);
+			writer.write_int(std::stoi(arg));
+		} else if (op == "jge") {
+			writer.write_opcode(ByteCode::JGE);
+			writer.write_int(std::stoi(arg));
+		} else if (op == "jle") {
+			writer.write_opcode(ByteCode::JLE);
 			writer.write_int(std::stoi(arg));
 			
 		//Other

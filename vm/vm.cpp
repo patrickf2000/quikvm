@@ -20,7 +20,7 @@ struct Instr {
 
 std::vector<Instr> instructions;
 std::set<unsigned char> int_codes = {I_LOAD, I_CMP, I_VAR, I_STORE, I_LOAD_VAR,
-			LBL, JMP, JE};
+			LBL, JMP, JE, JNE, JG, JL, JGE, JLE};
 
 //Loads the file
 void load(const char *path) {
@@ -131,6 +131,36 @@ void run() {
 			case ByteCode::JMP: counter = i.i_arg; continue;
 			case ByteCode::JE: {
 					if (cmp == 0) {
+						counter = i.i_arg;
+						continue;
+					}
+				} break;
+			case ByteCode::JNE: {
+					if (cmp != 0) {
+						counter = i.i_arg;
+						continue;
+					}
+				} break;
+			case ByteCode::JG: {
+					if (cmp == 1) {
+						counter = i.i_arg;
+						continue;
+					}
+				} break;
+			case ByteCode::JL: {
+					if (cmp == -1) {
+						counter = i.i_arg;
+						continue;
+					}
+				} break;
+			case ByteCode::JGE: {
+					if (cmp >= 0) {
+						counter = i.i_arg;
+						continue;
+					}
+				} break;
+			case ByteCode::JLE: {
+					if (cmp <= 0) {
 						counter = i.i_arg;
 						continue;
 					}
