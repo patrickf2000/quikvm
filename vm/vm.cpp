@@ -20,6 +20,7 @@ struct Instr {
 
 std::vector<Instr> instructions;
 std::set<unsigned char> int_codes = {I_LOAD, I_CMP, I_VAR, I_STORE, I_LOAD_VAR,
+			D_CMP, D_VAR, D_STORE, D_LOAD_VAR,
 			LBL, JMP, JE, JNE, JG, JL, JGE, JLE};
 
 //Loads the file
