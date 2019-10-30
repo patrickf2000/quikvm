@@ -24,7 +24,7 @@ std::vector<Instr> instructions;
 std::set<unsigned char> int_codes = {I_LOAD, I_CMP, I_VAR, I_STORE, I_LOAD_VAR,
 			D_CMP, D_VAR, D_STORE, D_LOAD_VAR,
 			LBL, JMP, JE, JNE, JG, JL, JGE, JLE,
-			SLEEP, NEW_THREAD};
+			CALL, SLEEP, NEW_THREAD};
 
 //Loads the file
 void load(const char *path) {
@@ -55,6 +55,7 @@ void run(int pc) {
 	std::stack<int> int_stack;
 	std::stack<double> flt_stack;
 	std::stack<std::string> str_stack;
+	std::stack<int> call_stack;
 	
 	int cmp = 0;
 	int counter = pc;
@@ -196,6 +197,18 @@ void run(int pc) {
 					std::thread thr(run, i.i_arg); 
 					thr.join();
 				} break;
+				
+			case ByteCode::CALL: {
+					call_stack.push(counter+1);
+					counter = i.i_arg;
+					continue;
+				}
+				
+			case ByteCode::RET: {
+					counter = call_stack.top();
+					call_stack.pop();
+					continue;
+				}
 				
 			case ByteCode::EXIT: std::exit(0);
 		}

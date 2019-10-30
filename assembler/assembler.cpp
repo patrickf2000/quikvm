@@ -39,7 +39,8 @@ void pass1(std::vector<std::string> *contents) {
 		auto arg = ln.substr(pos+1, ln.length()-1);
 
 		if (op == "jmp" || op == "je" || op == "jne" || op == "jg"
-			|| op == "jl" || op == "jge" || op == "jle" || op == "new_thread") {
+			|| op == "jl" || op == "jge" || op == "jle" || op == "call"
+			|| op == "new_thread") {
 			ln = op + " ";
 			ln += std::to_string(symbols.at(arg));
 		} else if (op == "i_store" || op == "i_load_var"
@@ -194,6 +195,11 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 		} else if (op == "new_thread") {
 			writer.write_opcode(ByteCode::NEW_THREAD);
 			writer.write_int(std::stoi(arg));
+		} else if (op == "call") {
+			writer.write_opcode(ByteCode::CALL);
+			writer.write_int(std::stoi(arg));
+		} else if (op == "ret") {
+			writer.write_opcode(ByteCode::RET);
 		}
 	}
 }

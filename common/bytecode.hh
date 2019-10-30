@@ -7,6 +7,10 @@ enum ByteCode {
 	LBL = 0x11,
 	SLEEP = 0x12,
 	
+	//Function related stuff
+	CALL = 0x13,
+	RET = 0x14,
+	
 	//Integer
 	I_LOAD = 0x20,
 	I_STORE = 0x21,
