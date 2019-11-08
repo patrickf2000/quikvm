@@ -6,6 +6,7 @@ enum ByteCode {
 	EXIT = 0x10,
 	LBL = 0x11,
 	SLEEP = 0x12,
+	START = 0x13,
 	
 	//Function related stuff
 	CALL = 0x13,

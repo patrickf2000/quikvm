@@ -7,6 +7,7 @@
 
 std::map<std::string, int> symbols;
 std::map<std::string, int> vars;
+int start_loco;
 
 //Assign numbers to labels and variables
 void pass1(std::vector<std::string> *contents) {
@@ -20,6 +21,9 @@ void pass1(std::vector<std::string> *contents) {
 		auto arg = ln.substr(pos+1, ln.length()-1);
 		
 		if (op == "lbl") {
+			if (arg == "_start")
+				start_loco = i;
+			
 			symbols.insert(std::pair<std::string, int>(arg, i));
 			ln = op + " " + std::to_string(i);
 		} else if (op == "i_var" || op == "d_var") {
@@ -78,6 +82,11 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 	path = name + "bin";
 	
 	BinWriter writer(path.c_str());
+	
+	if (start_loco != 0) {
+		writer.write_opcode(ByteCode::START);
+		writer.write_int(start_loco);
+	}
 	
 	//Now, assemble
 	for (int i = 0; i<contents->size(); i++) {

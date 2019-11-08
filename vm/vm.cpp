@@ -25,6 +25,8 @@ std::set<unsigned char> int_codes = {I_LOAD, I_CMP, I_VAR, I_STORE, I_LOAD_VAR,
 			D_CMP, D_VAR, D_STORE, D_LOAD_VAR,
 			LBL, JMP, JE, JNE, JG, JL, JGE, JLE,
 			CALL, SLEEP, NEW_THREAD};
+			
+int start_loco = 0;
 
 //Loads the file
 void load(const char *path) {
@@ -34,7 +36,10 @@ void load(const char *path) {
 	while (!reader.is_eof()) {
 		i.opcode = reader.read_opcode();
 		
-		if (int_codes.find(i.opcode) != int_codes.end()) {
+		if (i.opcode == ByteCode::START) {
+			start_loco = reader.read_int();
+			continue;
+		} else if (int_codes.find(i.opcode) != int_codes.end()) {
 			i.i_arg = reader.read_int();
 		} else if (i.opcode == ByteCode::D_LOAD) {
 			i.d_arg = reader.read_double();
@@ -215,4 +220,8 @@ void run(int pc) {
 		
 		++counter;
 	}
+}
+
+void run_start() {
+	run(start_loco);
 }
