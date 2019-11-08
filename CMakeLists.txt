@@ -18,8 +18,8 @@ find_library(pthread REQUIRED)
 add_compile_options(-std=c++11)
 include_directories(common)
 
-add_executable(asm ${ASM_SRC})
-add_executable(vm ${VM_SRC})
+add_executable(qkasm ${ASM_SRC})
+add_executable(qkvm ${VM_SRC})
 
-target_link_libraries(vm pthread)
+target_link_libraries(qkvm pthread)
 
