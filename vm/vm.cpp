@@ -47,7 +47,12 @@ void load(const char *path) {
 		} else if (i.opcode == ByteCode::S_LOAD) {
 			i.s_arg = reader.read_str();
 		} else if (i.opcode == ByteCode::EXCALL) {
-			i.s_arg = reader.read_str();
+			i.s_arg = "";
+			i.s_arg += reader.read_opcode();
+			i.s_arg += reader.read_opcode();
+			i.s_arg += reader.read_str();
+			i.s_arg += ';';
+			i.s_arg += reader.read_str();
 		}
 		
 		instructions.push_back(i);

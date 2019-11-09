@@ -8,13 +8,32 @@
 //Handles external function calls
 void excall(std::string cmd, Context *context) {
 	//Parse input string
-	std::string lib = "libqk";
+	/*std::string lib = "libqk";
 	lib += std::string(strtok((char *)cmd.c_str(), ">"));
 	lib += ".so";
 	
 	std::string func_name = strtok(NULL, ":");
 	std::string type = strtok(NULL, "; ");
-	std::string ret = strtok(NULL, " ");
+	std::string ret = strtok(NULL, " ");*/
+	
+	std::string lib = "libqk";
+	std::string func_name = "";
+	unsigned char type = cmd[0];
+	unsigned char ret = cmd[1];
+	bool found = false;
+	
+	for (int i = 2; i<cmd.length(); i++) {
+		if (cmd[i] == ';') {
+			lib += ".so";
+			found = true;
+			continue;
+		}
+		
+		if (found)
+			func_name += cmd[i];
+		else
+			lib += cmd[i];
+	}
 
 	//Set up needed values
 	void *handle;
@@ -23,9 +42,9 @@ void excall(std::string cmd, Context *context) {
 	void *arg;
 	
 	//Create the input arguments
-	if (type == "int") {
+	if (type == 0x2) {
 		arg = (void *)&context->int_stack.top();
-	} else if (type == "dec") {
+	} else if (type ==0x3) {
 		arg = (void *)&context->flt_stack.top();
 	}
 	
@@ -39,11 +58,11 @@ void excall(std::string cmd, Context *context) {
 	dlerror();
 	
 	//Call and if necessary, get return type
-	if (ret == "int") {
+	if (ret == 0x2) {
 		i_func = (int (*)(void *))dlsym(handle, (char *)func_name.c_str());
 		int x = i_func(arg);
 		context->int_stack.push(x);
-	} else if (ret == "void") {
+	} else if (ret == 0x1) {
 		*(void **)(&func) = dlsym(handle, (char *)func_name.c_str());
 		(*func)(arg);
 	}

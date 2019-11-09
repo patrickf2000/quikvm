@@ -220,9 +220,6 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 			std::string func_name = strtok(NULL, ":");
 			std::string type = strtok(NULL, "; ");
 			std::string ret = strtok(NULL, " ");
-
-			writer.write_str(lib.c_str());
-			writer.write_str(func_name.c_str());
 			
 			if (type == "void") {
 				writer.write_opcode(0x1);
@@ -239,6 +236,9 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 			} else if (ret == "dec") {
 				writer.write_opcode(0x3);
 			}
+			
+			writer.write_str(lib.c_str());
+			writer.write_str(func_name.c_str());
 		}
 	}
 }
