@@ -21,3 +21,16 @@ void test3(void *arg)
 	puts("Test 3-> Success!");
 	printf("Float Arg: %f\n", d);
 }
+
+//Test return
+int test_ret()
+{
+	puts("Returning 6:");
+	return 6;
+}
+
+int test_ret2(void *arg)
+{
+	int x = *(int *)arg;
+	return x*x;
+}

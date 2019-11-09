@@ -20,7 +20,7 @@ set(TEST_LIB_SRC
 
 find_library(pthread REQUIRED)
 
-add_compile_options(-std=c++11)
+add_compile_options(-std=c++11 -g)
 include_directories(common)
 
 add_executable(qkasm ${ASM_SRC})
