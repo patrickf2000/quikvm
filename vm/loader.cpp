@@ -4,7 +4,7 @@
 
 #include "loader.hh"
 
-void excall(std::string cmd, std::stack<int> *istack) {
+void excall(std::string cmd, Context *context) {
 	int pos = cmd.find(">");
 	auto lib = "libqk" + cmd.substr(0, pos) + ".so";
 	
@@ -22,7 +22,7 @@ void excall(std::string cmd, std::stack<int> *istack) {
 	void *arg;
 	
 	if (type == "int") {
-		arg = (void *)&istack->top();
+		arg = (void *)&context->int_stack.top();
 	}
 	
 	handle = dlopen(lib.c_str(), RTLD_LAZY);

@@ -221,7 +221,7 @@ void run(int pc) {
 				}
 				
 			case ByteCode::EXCALL: {
-					excall(i.s_arg, &c.int_stack);
+					excall(i.s_arg, &c);
 				} break;
 				
 			case ByteCode::EXIT: std::exit(0);
