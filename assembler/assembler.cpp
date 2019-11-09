@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string.h>
 
 #include <bytecode.hh>
 
@@ -214,7 +215,30 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 		} else if (op == "excall") {
 			writer.write_opcode(ByteCode::EXCALL);
 			auto s = arg.substr(1, arg.length()-2);
-			writer.write_str(s.c_str());
+			
+			std::string lib = strtok((char *)s.c_str(), ">");
+			std::string func_name = strtok(NULL, ":");
+			std::string type = strtok(NULL, "; ");
+			std::string ret = strtok(NULL, " ");
+
+			writer.write_str(lib.c_str());
+			writer.write_str(func_name.c_str());
+			
+			if (type == "void") {
+				writer.write_opcode(0x1);
+			} else if (type == "int") {
+				writer.write_opcode(0x2);
+			} else if (type == "dec") {
+				writer.write_opcode(0x3);
+			}
+			
+			if (ret == "void") {
+				writer.write_opcode(0x1);
+			} else if (ret == "int") {
+				writer.write_opcode(0x2);
+			} else if (ret == "dec") {
+				writer.write_opcode(0x3);
+			}
 		}
 	}
 }
