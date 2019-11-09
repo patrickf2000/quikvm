@@ -63,13 +63,6 @@ void load(const char *path) {
 
 //Runs the virtual machine
 void run(int pc) {
-	/*std::map<int, std::string> c.memory;
-
-	std::stack<int> int_stack;
-	std::stack<double> flt_stack;
-	std::stack<std::string> str_stack;
-	std::stack<int> call_stack;*/
-	
 	Context c;
 	
 	int cmp = 0;

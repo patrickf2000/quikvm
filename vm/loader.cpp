@@ -8,14 +8,6 @@
 //Handles external function calls
 void excall(std::string cmd, Context *context) {
 	//Parse input string
-	/*std::string lib = "libqk";
-	lib += std::string(strtok((char *)cmd.c_str(), ">"));
-	lib += ".so";
-	
-	std::string func_name = strtok(NULL, ":");
-	std::string type = strtok(NULL, "; ");
-	std::string ret = strtok(NULL, " ");*/
-	
 	std::string lib = "libqk";
 	std::string func_name = "";
 	unsigned char type = cmd[0];
