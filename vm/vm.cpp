@@ -58,12 +58,14 @@ void load(const char *path) {
 
 //Runs the virtual machine
 void run(int pc) {
-	std::map<int, std::string> memory;
+	/*std::map<int, std::string> c.memory;
 
 	std::stack<int> int_stack;
 	std::stack<double> flt_stack;
 	std::stack<std::string> str_stack;
-	std::stack<int> call_stack;
+	std::stack<int> call_stack;*/
+	
+	Context c;
 	
 	int cmp = 0;
 	int counter = pc;
@@ -72,27 +74,27 @@ void run(int pc) {
 		auto i = instructions.at(counter);
 		
 		switch (i.opcode) {
-			case ByteCode::I_LOAD: int_stack.push(i.i_arg); break;
-			case ByteCode::I_PRINT: std::cout << int_stack.top() << std::endl; break;
+			case ByteCode::I_LOAD: c.int_stack.push(i.i_arg); break;
+			case ByteCode::I_PRINT: std::cout << c.int_stack.top() << std::endl; break;
 			case ByteCode::I_VAR:
-			case ByteCode::D_VAR: memory.insert(std::pair<int, std::string>(i.i_arg, "")); break;
+			case ByteCode::D_VAR: c.memory.insert(std::pair<int, std::string>(i.i_arg, "")); break;
 			case ByteCode::I_STORE: {
-					memory[i.i_arg] = std::to_string(int_stack.top()); 
-					int_stack.pop();
+					c.memory[i.i_arg] = std::to_string(c.int_stack.top()); 
+					c.int_stack.pop();
 				} break;
 			case ByteCode::I_LOAD_VAR: {
-					int item = std::stoi(memory[i.i_arg]);
-					int_stack.push(item);
+					int item = std::stoi(c.memory[i.i_arg]);
+					c.int_stack.push(item);
 				} break;
 			case ByteCode::I_INPUT: {
 					int i;
 					std::cin >> i;
-					int_stack.push(i);
+					c.int_stack.push(i);
 				} break;
 			case ByteCode::I_CMP: {
-					if (int_stack.top() > i.i_arg)
+					if (c.int_stack.top() > i.i_arg)
 						cmp = 1;
-					else if (int_stack.top() < i.i_arg)
+					else if (c.int_stack.top() < i.i_arg)
 						cmp = -1;
 					else
 						cmp = 0;
@@ -103,10 +105,10 @@ void run(int pc) {
 			case ByteCode::I_MUL:
 			case ByteCode::I_DIV:
 			case ByteCode::I_MOD: {
-					int no1 = int_stack.top();
-					int_stack.pop();
-					int no2 = int_stack.top();
-					int_stack.pop();
+					int no1 = c.int_stack.top();
+					c.int_stack.pop();
+					int no2 = c.int_stack.top();
+					c.int_stack.pop();
 					int answer = 0;
 					
 					switch (i.opcode) {
@@ -117,34 +119,34 @@ void run(int pc) {
 						default: answer = no1%no2;
 					}
 					
-					int_stack.push(answer);
+					c.int_stack.push(answer);
 				} break;
-			case ByteCode::I_POP: int_stack.pop(); break;
+			case ByteCode::I_POP: c.int_stack.pop(); break;
 			
-			case ByteCode::D_LOAD: flt_stack.push(i.d_arg); break;
-			case ByteCode::D_PRINT: std::cout << flt_stack.top() << std::endl; break;
+			case ByteCode::D_LOAD: c.flt_stack.push(i.d_arg); break;
+			case ByteCode::D_PRINT: std::cout << c.flt_stack.top() << std::endl; break;
 			case ByteCode::D_STORE: {
-					memory[i.i_arg] = std::to_string(flt_stack.top()); 
-					flt_stack.pop();
+					c.memory[i.i_arg] = std::to_string(c.flt_stack.top()); 
+					c.flt_stack.pop();
 				} break;
 			case ByteCode::D_LOAD_VAR: {
-					double item = std::stod(memory[i.i_arg]);
-					flt_stack.push(item);
+					double item = std::stod(c.memory[i.i_arg]);
+					c.flt_stack.push(item);
 				} break;
 			case ByteCode::D_INPUT: {
 					double d;
 					std::cin >> d;
-					flt_stack.push(d);
+					c.flt_stack.push(d);
 				} break;
 				
 			case ByteCode::D_ADD:
 			case ByteCode::D_SUB:
 			case ByteCode::D_MUL:
 			case ByteCode::D_DIV: {
-					double no1 = flt_stack.top();
-					flt_stack.pop();
-					double no2 = flt_stack.top();
-					flt_stack.pop();
+					double no1 = c.flt_stack.top();
+					c.flt_stack.pop();
+					double no2 = c.flt_stack.top();
+					c.flt_stack.pop();
 					double answer = 0;
 					
 					switch (i.opcode) {
@@ -154,13 +156,13 @@ void run(int pc) {
 						case ByteCode::D_DIV: answer = no1/no2; break;
 					}
 					
-					flt_stack.push(answer);
+					c.flt_stack.push(answer);
 				} break;
-			case ByteCode::D_POP: flt_stack.pop(); break;
+			case ByteCode::D_POP: c.flt_stack.pop(); break;
 			
-			case ByteCode::S_LOAD: str_stack.push(i.s_arg); break;
-			case ByteCode::S_PRINT: std::cout << str_stack.top() << std::endl; break;
-			case ByteCode::S_POP: str_stack.pop(); break;
+			case ByteCode::S_LOAD: c.str_stack.push(i.s_arg); break;
+			case ByteCode::S_PRINT: std::cout << c.str_stack.top() << std::endl; break;
+			case ByteCode::S_POP: c.str_stack.pop(); break;
 			
 			case ByteCode::JMP: counter = i.i_arg; continue;
 			case ByteCode::JE: {
@@ -207,19 +209,19 @@ void run(int pc) {
 				} break;
 				
 			case ByteCode::CALL: {
-					call_stack.push(counter+1);
+					c.call_stack.push(counter+1);
 					counter = i.i_arg;
 					continue;
 				}
 				
 			case ByteCode::RET: {
-					counter = call_stack.top();
-					call_stack.pop();
+					counter = c.call_stack.top();
+					c.call_stack.pop();
 					continue;
 				}
 				
 			case ByteCode::EXCALL: {
-					excall(i.s_arg, &int_stack);
+					excall(i.s_arg, &c.int_stack);
 				} break;
 				
 			case ByteCode::EXIT: std::exit(0);
