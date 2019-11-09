@@ -23,6 +23,8 @@ void excall(std::string cmd, Context *context) {
 	
 	if (type == "int") {
 		arg = (void *)&context->int_stack.top();
+	} else if (type == "dec") {
+		arg = (void *)&context->flt_stack.top();
 	}
 	
 	handle = dlopen(lib.c_str(), RTLD_LAZY);

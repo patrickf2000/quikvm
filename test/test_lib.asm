@@ -11,4 +11,11 @@ i_load 8
 
 excall "test>test2:int"
 
+s_load ""
+s_print
+
+d_load 3.14
+
+excall "test>test3:dec"
+
 exit
