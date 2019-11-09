@@ -224,7 +224,7 @@ void run(int pc) {
 					excall(i.s_arg, &c);
 				} break;
 				
-			case ByteCode::EXIT: std::exit(0);
+			case ByteCode::EXIT: return;
 		}
 		
 		++counter;
