@@ -5,20 +5,9 @@
 
 #include "loader.hh"
 
+//Handles external function calls
 void excall(std::string cmd, Context *context) {
-	/*int pos = cmd.find(">");
-	auto lib = "libqk" + cmd.substr(0, pos) + ".so";
-	auto func_name = cmd.substr(pos+1);
-	
-	std::string type = "NULL";
-	std::string ret = "NULL";
-	
-	int dpos = func_name.find(":");
-	if (dpos != std::string::npos) {
-		type = func_name.substr(dpos+1);
-		func_name = cmd.substr(pos+1, dpos);
-	}*/
-	
+	//Parse input string
 	std::string lib = "libqk";
 	lib += std::string(strtok((char *)cmd.c_str(), ">"));
 	lib += ".so";
@@ -27,18 +16,20 @@ void excall(std::string cmd, Context *context) {
 	std::string type = strtok(NULL, "; ");
 	std::string ret = strtok(NULL, " ");
 
-	
+	//Set up needed values
 	void *handle;
 	void (*func)(void *);
 	int (*i_func)(void *);
 	void *arg;
 	
+	//Create the input arguments
 	if (type == "int") {
 		arg = (void *)&context->int_stack.top();
 	} else if (type == "dec") {
 		arg = (void *)&context->flt_stack.top();
 	}
 	
+	//Load the library
 	handle = dlopen(lib.c_str(), RTLD_LAZY);
 	if (!handle) {
 		std::cout << "Error: Unable to load API" << std::endl;
@@ -47,6 +38,7 @@ void excall(std::string cmd, Context *context) {
 	
 	dlerror();
 	
+	//Call and if necessary, get return type
 	if (ret == "int") {
 		i_func = (int (*)(void *))dlsym(handle, (char *)func_name.c_str());
 		int x = i_func(arg);
