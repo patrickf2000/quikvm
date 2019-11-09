@@ -12,6 +12,7 @@
 
 #include "vm.hh"
 #include "reader.hh"
+#include "loader.hh"
 
 struct Instr {
 	unsigned char opcode;
@@ -44,6 +45,8 @@ void load(const char *path) {
 		} else if (i.opcode == ByteCode::D_LOAD) {
 			i.d_arg = reader.read_double();
 		} else if (i.opcode == ByteCode::S_LOAD) {
+			i.s_arg = reader.read_str();
+		} else if (i.opcode == ByteCode::EXCALL) {
 			i.s_arg = reader.read_str();
 		}
 		
@@ -214,6 +217,10 @@ void run(int pc) {
 					call_stack.pop();
 					continue;
 				}
+				
+			case ByteCode::EXCALL: {
+					excall(i.s_arg);
+				} break;
 				
 			case ByteCode::EXIT: std::exit(0);
 		}

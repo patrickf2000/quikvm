@@ -209,6 +209,12 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 			writer.write_int(std::stoi(arg));
 		} else if (op == "ret") {
 			writer.write_opcode(ByteCode::RET);
+			
+		//External library
+		} else if (op == "excall") {
+			writer.write_opcode(ByteCode::EXCALL);
+			auto s = arg.substr(1, arg.length()-2);
+			writer.write_str(s.c_str());
 		}
 	}
 }

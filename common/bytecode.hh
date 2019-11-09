@@ -9,8 +9,9 @@ enum ByteCode {
 	START = 0x13,
 	
 	//Function related stuff
-	CALL = 0x13,
-	RET = 0x14,
+	CALL = 0x14,
+	RET = 0x15,
+	EXCALL = 0x16,
 	
 	//Integer
 	I_LOAD = 0x20,
@@ -56,5 +57,5 @@ enum ByteCode {
 	JLE = 0xA9,
 	
 	//Thread control
-	NEW_THREAD = 0xB1
+	NEW_THREAD = 0xB1,
 };
