@@ -11,6 +11,16 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 	
+	//Check command line arguments
+	bool p1 = false;
+	
+	for (int i = 1; i<argc; i++) {
+		if (std::string(argv[i]) == "-p1") {
+			p1 = true;
+		}
+	}
+	
+	//Load the file
 	auto input = std::string(argv[1]);
 	std::string ln = "";
 	
@@ -22,6 +32,7 @@ int main(int argc, char *argv[]) {
 	
 	std::vector<std::string> contents;
 	
+	//Load and cleanup each line
 	while (std::getline(reader, ln)) {
 		ln.erase(0, ln.find_first_not_of(" \t"));
 		ln.erase(ln.find_last_not_of(" \t")+1);
@@ -34,7 +45,8 @@ int main(int argc, char *argv[]) {
 	
 	reader.close();
 	
-	pass1(&contents);
+	//Assemble
+	pass1(&contents, p1);
 	pass2(&contents, input);
 	
 	return 0;

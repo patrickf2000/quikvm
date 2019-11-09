@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string.h>
+#include <cstdlib>
 
 #include <bytecode.hh>
 
@@ -11,7 +12,7 @@ std::map<std::string, int> vars;
 int start_loco;
 
 //Assign numbers to labels and variables
-void pass1(std::vector<std::string> *contents) {
+void pass1(std::vector<std::string> *contents, bool p1) {
 	std::vector<std::string> ret;
 	int var_index = 0;
 
@@ -59,9 +60,13 @@ void pass1(std::vector<std::string> *contents) {
 	}
 	
 	//debug
-	/*for (int i = 0; i<contents->size(); i++) {
-		std::cout << "[DB] " << i << ": " << contents->at(i) << std::endl;
-	}*/
+	if (p1) {
+		for (int i = 0; i<contents->size(); i++) {
+			std::cout << "[DB] " << i << ": " << contents->at(i) << std::endl;
+		}
+		
+		std::exit(0);
+	}
 }
 
 //Assemble and write the binary file
