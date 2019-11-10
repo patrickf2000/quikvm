@@ -227,8 +227,8 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 			writer.write_opcode(ByteCode::RET);
 			
 		//External library
-		} else if (op == "excall") {
-			writer.write_opcode(ByteCode::EXCALL);
+		} else if (op == "lib") {
+			writer.write_opcode(ByteCode::LIB);
 			auto s = arg.substr(1, arg.length()-2);
 			
 			std::string lib = strtok((char *)s.c_str(), ">");
@@ -258,6 +258,10 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 			
 			writer.write_str(lib.c_str());
 			writer.write_str(func_name.c_str());
+		} else if (op == "excall") {
+			writer.write_opcode(ByteCode::EXCALL);
+			auto s = arg.substr(1, arg.length()-2);
+			writer.write_str(s.c_str());
 		}
 	}
 }

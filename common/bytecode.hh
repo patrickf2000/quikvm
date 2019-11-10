@@ -11,7 +11,8 @@ enum ByteCode {
 	//Function related stuff
 	CALL = 0x14,
 	RET = 0x15,
-	EXCALL = 0x16,
+	LIB = 0x16,
+	EXCALL = 0x17,
 	
 	//Integer
 	I_LOAD = 0x20,

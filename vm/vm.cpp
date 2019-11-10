@@ -46,15 +46,17 @@ void load(const char *path) {
 			i.i_arg = reader.read_int();
 		} else if (i.opcode == ByteCode::D_LOAD) {
 			i.d_arg = reader.read_double();
-		} else if (i.opcode == ByteCode::S_LOAD) {
+		} else if (i.opcode == ByteCode::S_LOAD || i.opcode == ByteCode::EXCALL) {
 			i.s_arg = reader.read_str();
-		} else if (i.opcode == ByteCode::EXCALL) {
-			i.s_arg = "";
-			i.s_arg += reader.read_opcode();
-			i.s_arg += reader.read_opcode();
-			i.s_arg += reader.read_str();
-			i.s_arg += ';';
-			i.s_arg += reader.read_str();
+		} else if (i.opcode == ByteCode::LIB) {
+			std::string cmd;
+			cmd += reader.read_opcode();
+			cmd += reader.read_opcode();
+			cmd += reader.read_str();
+			cmd += ';';
+			cmd += reader.read_str();
+			lib(cmd);
+			continue;
 		}
 		
 		instructions.push_back(i);
@@ -233,7 +235,7 @@ void run(int pc, bool dump) {
 	
 	//Clean up any loaded libraries
 	for (auto const& i : open_libs) {
-		dlclose(i.second);
+		dlclose(i.second.handle);
 	}
 	
 	//If requested, dump the memory

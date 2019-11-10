@@ -5,6 +5,15 @@
 
 #include "vm.hh"
 
-extern std::map<std::string, void *> open_libs;
+struct Func {
+	void *handle;
+	std::string lib;
+	std::string func_name;
+	unsigned char type;
+	unsigned char ret;
+};
 
-void excall(std::string cmd, Context *context);
+extern std::map<std::string, Func> open_libs;
+
+void lib(std::string cmd);
+void excall(std::string name, Context *context);

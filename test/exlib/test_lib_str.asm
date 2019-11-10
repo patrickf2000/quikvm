@@ -1,3 +1,5 @@
+lib "test>test1:void;void"
+
 s_load "Testing an external function (2):"
 s_print
 
@@ -6,6 +8,6 @@ s_print
 
 i_load 5
 
-excall "test>test1:void;void"
+excall "test1"
 
 exit
