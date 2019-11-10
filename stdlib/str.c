@@ -16,3 +16,9 @@ char *test_str_ret()
 	
 	return ret;
 }
+
+void test_str_in(void *arg)
+{
+	char *str = *(char **)arg;
+	printf("STR: %s\n", str);
+}
