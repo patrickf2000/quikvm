@@ -23,6 +23,7 @@ struct Instr {
 
 std::vector<Instr> instructions;
 std::set<unsigned char> int_codes = {I_LOAD, I_CMP, I_VAR, I_STORE, I_LOAD_VAR,
+			I_ARRAY,
 			D_CMP, D_VAR, D_STORE, D_LOAD_VAR,
 			LBL, JMP, JE, JNE, JG, JL, JGE, JLE,
 			CALL, SLEEP, NEW_THREAD};
@@ -62,7 +63,7 @@ void load(const char *path) {
 }
 
 //Runs the virtual machine
-void run(int pc) {
+void run(int pc, bool dump) {
 	Context c;
 	
 	int cmp = 0;
@@ -75,6 +76,7 @@ void run(int pc) {
 			case ByteCode::I_LOAD: c.int_stack.push(i.i_arg); break;
 			case ByteCode::I_PRINT: std::cout << c.int_stack.top() << std::endl; break;
 			case ByteCode::I_VAR:
+			case ByteCode::I_ARRAY:
 			case ByteCode::D_VAR: c.memory.insert(std::pair<int, std::string>(i.i_arg, "")); break;
 			case ByteCode::I_STORE: {
 					c.memory[i.i_arg] = std::to_string(c.int_stack.top()); 
@@ -202,7 +204,7 @@ void run(int pc) {
 				
 			case ByteCode::SLEEP: sleep(i.i_arg); break;
 			case ByteCode::NEW_THREAD: {
-					std::thread thr(run, i.i_arg); 
+					std::thread thr(run, i.i_arg, dump); 
 					thr.join();
 				} break;
 				
@@ -222,13 +224,26 @@ void run(int pc) {
 					excall(i.s_arg, &c);
 				} break;
 				
-			case ByteCode::EXIT: return;
+			case ByteCode::EXIT: break;
 		}
 		
 		++counter;
 	}
+	
+	//If requested, dump the memory
+	if (dump) {
+		std::cout << "MAIN MEMORY DUMP" << std::endl;
+		
+		for (int i = 0; i<c.memory.size(); i++) {
+			std::cout << "[" << i << "] -> ";
+			std::cout << c.memory[i] << std::endl;
+		}
+		
+		std::cout << std::endl;
+		std::cout << "Dumping complete." << std::endl;
+	}
 }
 
-void run_start() {
-	run(start_loco);
+void run_start(bool dump) {
+	run(start_loco, dump);
 }

@@ -32,6 +32,13 @@ void pass1(std::vector<std::string> *contents, bool p1) {
 			vars.insert(std::pair<std::string, int>(arg, var_index));
 			ln = op + " " + std::to_string(var_index);
 			++var_index;
+		} else if (op == "i_array") {
+			std::string name = strtok((char *)arg.c_str(), " ");
+			int len = std::stoi(strtok(NULL, " "));
+			
+			vars.insert(std::pair<std::string, int>(name, var_index));
+			ln = op + " " + std::to_string(var_index);
+			var_index += len;
 		}
 		
 		contents->insert(contents->begin()+i+1, ln);
@@ -133,6 +140,9 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 			writer.write_opcode(ByteCode::I_MOD);
 		} else if (op == "i_pop") {
 			writer.write_opcode(ByteCode::I_POP);
+		} else if (op == "i_array") {
+			writer.write_opcode(ByteCode::I_ARRAY);
+			writer.write_int(std::stoi(arg));
 			
 		//Double operations
 		} else if (op == "d_load") {

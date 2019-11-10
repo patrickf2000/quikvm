@@ -11,17 +11,20 @@ int main(int argc, char *argv[]) {
 	}
 	
 	bool t_monitor = false;
+	bool dump = false;
 	
 	for (int i = 1; i<argc; i++) {
 		if (std::string(argv[i]) == "-t" || std::string(argv[i]) == "--time") {
 			t_monitor = true;
+		} else if (std::string(argv[i]) == "-dm" || std::string(argv[i]) == "--dump-memory") {
+			dump = true;
 		}
 	}
 	
 	auto start = std::chrono::steady_clock::now();
 	
 	load(argv[1]);
-	run_start();
+	run_start(dump);
 	
 	if (t_monitor) {
 		auto end = std::chrono::steady_clock::now();

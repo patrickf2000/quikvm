@@ -13,5 +13,5 @@ struct Context {
 };
 
 void load(const char *path);
-void run(int pc);
-void run_start();
+void run(int pc, bool dump);
+void run_start(bool dump);
