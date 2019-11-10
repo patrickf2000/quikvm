@@ -2,6 +2,13 @@
 #include <string.h>
 #include <malloc.h>
 
+//String length
+int str_len(void *arg)
+{
+	char *str = *(char **)arg;
+	return strlen(str);
+}
+
 //The test function
 char *test_str_ret()
 {
