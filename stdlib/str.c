@@ -1,12 +1,21 @@
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
+#include <stdlib.h>
 
 //String length
 int str_len(void *arg)
 {
 	char *str = *(char **)arg;
 	return strlen(str);
+}
+
+//Convert a string to an integer
+int str2int(void *arg)
+{
+	char *str = *(char **)arg;
+	int no = atoi(str);
+	return no;
 }
 
 //The test function
