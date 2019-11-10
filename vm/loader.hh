@@ -5,4 +5,6 @@
 
 #include "vm.hh"
 
+extern std::map<std::string, void *> open_libs;
+
 void excall(std::string cmd, Context *context);

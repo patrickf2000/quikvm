@@ -7,6 +7,7 @@
 #include <set>
 #include <thread>
 #include <unistd.h>
+#include <dlfcn.h>
 
 #include <bytecode.hh>
 
@@ -228,6 +229,11 @@ void run(int pc, bool dump) {
 		}
 		
 		++counter;
+	}
+	
+	//Clean up any loaded libraries
+	for (auto const& i : open_libs) {
+		dlclose(i.second);
 	}
 	
 	//If requested, dump the memory

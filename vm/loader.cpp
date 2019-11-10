@@ -2,8 +2,12 @@
 #include <cstdlib>
 #include <dlfcn.h>
 #include <cstring>
+#include <map>
 
 #include "loader.hh"
+
+//Opened files
+std::map<std::string, void *> open_libs;
 
 //Handles external function calls
 void excall(std::string cmd, Context *context) {
@@ -41,13 +45,19 @@ void excall(std::string cmd, Context *context) {
 	}
 	
 	//Load the library
-	handle = dlopen(lib.c_str(), RTLD_LAZY);
-	if (!handle) {
-		std::cout << "Error: Unable to load API" << std::endl;
-		std::exit(1);
+	if (open_libs.find(lib) != open_libs.end()) {
+		handle = open_libs[lib];
+	} else {
+		handle = dlopen(lib.c_str(), RTLD_LAZY);
+		if (!handle) {
+			std::cout << "Error: Unable to load API" << std::endl;
+			std::exit(1);
+		}
+		
+		dlerror();
+		
+		open_libs[lib] = handle;
 	}
-	
-	dlerror();
 	
 	//Call and if necessary, get return type
 	if (ret == 0x2) {
@@ -58,6 +68,4 @@ void excall(std::string cmd, Context *context) {
 		*(void **)(&func) = dlsym(handle, (char *)func_name.c_str());
 		(*func)(arg);
 	}
-	
-	dlclose(handle);
 }

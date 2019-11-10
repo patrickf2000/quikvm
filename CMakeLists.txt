@@ -14,10 +14,6 @@ set(VM_SRC
 	vm/loader.cpp
 )
 
-set(TEST_LIB_SRC
-	stdlib/test.c
-)
-
 find_library(pthread REQUIRED)
 
 add_compile_options(-std=c++11 -g)
@@ -26,7 +22,7 @@ include_directories(common)
 add_executable(qkasm ${ASM_SRC})
 add_executable(qkvm ${VM_SRC})
 
-add_library(qktest SHARED ${TEST_LIB_SRC})
+add_library(qktest SHARED stdlib/test.c)
 
 target_link_libraries(qkvm pthread dl)
 
