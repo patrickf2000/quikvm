@@ -35,13 +35,16 @@ void excall(std::string cmd, Context *context) {
 	void *handle;
 	void (*func)(void *);
 	int (*i_func)(void *);
+	char *(*str_func)(void *);
 	void *arg;
 	
 	//Create the input arguments
 	if (type == 0x2) {
 		arg = (void *)&context->int_stack.top();
-	} else if (type ==0x3) {
+	} else if (type == 0x3) {
 		arg = (void *)&context->flt_stack.top();
+	} else if (type == 0x4) {
+		arg = (void *)&context->str_stack.top();
 	}
 	
 	//Load the library
@@ -67,5 +70,9 @@ void excall(std::string cmd, Context *context) {
 	} else if (ret == 0x1) {
 		*(void **)(&func) = dlsym(handle, (char *)func_name.c_str());
 		(*func)(arg);
+	} else if (ret = 0x4) {
+		str_func = (char *(*)(void *))dlsym(handle, (char *)func_name.c_str());
+		char *s = str_func(arg);
+		context->str_stack.push(std::string(s));
 	}
 }

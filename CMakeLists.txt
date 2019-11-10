@@ -23,6 +23,7 @@ add_executable(qkasm ${ASM_SRC})
 add_executable(qkvm ${VM_SRC})
 
 add_library(qktest SHARED stdlib/test.c)
+add_library(qkstr SHARED stdlib/str.c)
 
 target_link_libraries(qkvm pthread dl)
 

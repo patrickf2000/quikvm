@@ -242,6 +242,8 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 				writer.write_opcode(0x2);
 			} else if (type == "dec") {
 				writer.write_opcode(0x3);
+			} else if (type == "str") {
+				writer.write_opcode(0x4);
 			}
 			
 			if (ret == "void") {
@@ -250,6 +252,8 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 				writer.write_opcode(0x2);
 			} else if (ret == "dec") {
 				writer.write_opcode(0x3);
+			} else if (ret == "str") {
+				writer.write_opcode(0x4);
 			}
 			
 			writer.write_str(lib.c_str());
