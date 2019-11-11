@@ -6,32 +6,18 @@ lib "io>close:void;void"
 s_load "file.txt"
 excall "open"
 
-excall "getln"
-s_print
-s_pop
-
-excall "getln"
-s_print
-s_pop
-
-excall "getln"
-s_print
-s_pop
-
-excall "is_eof"
-i_cmp 1
-je y_eof
-jmp n_eof
-
-lbl y_eof
-	s_load "We are at end."
+lbl read
+	excall "getln"
 	s_print
-	jmp done
+	s_pop
 
-lbl n_eof
-	s_load "We aren't done!!"
-	s_print
+	excall "is_eof"
+	i_cmp 1
+	jne read
 
 lbl done
+	s_load "Done!"
+	s_print
+	
 	excall "close"
 	exit

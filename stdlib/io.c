@@ -22,6 +22,7 @@ char *getln()
 	int len = 100;
 	char *ln = malloc(len+1);
 	int i = 0;
+	c = 0;
 	
 	while (((c = fgetc(f)) != EOF) && (i < len))
 	{

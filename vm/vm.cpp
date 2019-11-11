@@ -56,7 +56,6 @@ void load(const char *path) {
 			cmd += ';';
 			cmd += reader.read_str();
 			lib(cmd);
-			continue;
 		}
 		
 		instructions.push_back(i);
@@ -74,6 +73,13 @@ void run(int pc, bool dump) {
 	
 	while (counter < instructions.size()) {
 		auto i = instructions.at(counter);
+		
+		//Dump requested info
+		if (dump) {
+			std::cout << "PC: " << counter << " OUT " << instructions.size() << std::endl;
+			printf("OPx: %x\n", i.opcode);
+			std::cout << std::endl;
+		}
 		
 		switch (i.opcode) {
 			case ByteCode::I_LOAD: c.int_stack.push(i.i_arg); break;
@@ -228,6 +234,7 @@ void run(int pc, bool dump) {
 				} break;
 				
 			case ByteCode::EXIT: break;
+			case ByteCode::LIB: break;
 		}
 		
 		++counter;
