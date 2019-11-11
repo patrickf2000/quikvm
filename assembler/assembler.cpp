@@ -59,7 +59,17 @@ void pass1(std::vector<std::string> *contents, bool p1) {
 		} else if (op == "i_store" || op == "i_load_var"
 				|| op == "d_store" || op == "d_load_var") {
 			ln = op + " ";
-			ln += std::to_string(vars.at(arg));
+			
+			if (arg.find("+") != std::string::npos) {
+				std::string name = strtok((char *)arg.c_str(), "+");
+				std::string offset = strtok(NULL, " ");
+				
+				int addr = vars[name];
+				addr += std::stoi(offset);
+				ln += std::to_string(addr);
+			} else {
+				ln += std::to_string(vars[arg]);
+			}
 		}
 		
 		contents->insert(contents->begin()+i+1, ln);
