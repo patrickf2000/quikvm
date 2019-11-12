@@ -26,7 +26,7 @@ std::vector<Instr> instructions;
 std::set<unsigned char> int_codes = {I_LOAD, I_CMP, I_VAR, I_STORE, I_LOAD_VAR,
 			I_ARRAY,
 			D_CMP, D_VAR, D_STORE, D_LOAD_VAR,
-			LBL, JMP, JE, JNE, JG, JL, JGE, JLE,
+			JMP, JE, JNE, JG, JL, JGE, JLE,
 			CALL, SLEEP, NEW_THREAD};
 			
 int start_loco = 0;

@@ -28,6 +28,9 @@ void pass1(std::vector<std::string> *contents, bool p1) {
 			
 			symbols.insert(std::pair<std::string, int>(arg, i));
 			ln = op + " " + std::to_string(i);
+			
+			contents->erase(contents->begin()+i);
+			continue;
 		} else if (op == "i_var" || op == "d_var") {
 			vars.insert(std::pair<std::string, int>(arg, var_index));
 			ln = op + " " + std::to_string(var_index);
@@ -196,9 +199,6 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 			writer.write_opcode(ByteCode::S_POP);
 			
 		//Flow control
-		} else if (op == "lbl") {
-			writer.write_opcode(ByteCode::LBL);
-			writer.write_int(std::stoi(arg));
 		} else if (op == "jmp") {
 			writer.write_opcode(ByteCode::JMP);
 			writer.write_int(std::stoi(arg));
