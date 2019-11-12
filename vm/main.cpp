@@ -2,7 +2,7 @@
 #include <time.h>
 #include <chrono>
 
-#include "vm.hh"
+#include <vm.hh>
 
 int main(int argc, char *argv[]) {
 	if (argc == 1) {
