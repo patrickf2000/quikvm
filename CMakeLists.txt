@@ -15,6 +15,7 @@ set(LIBVM_SRC
 
 set(VM_SRC
 	vm/main.cpp
+	vm/disassembler.cpp
 )
 
 find_library(pthread REQUIRED)

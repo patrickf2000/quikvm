@@ -15,13 +15,6 @@
 #include "reader.hh"
 #include "loader.hh"
 
-struct Instr {
-	unsigned char opcode;
-	int i_arg;
-	double d_arg;
-	std::string s_arg;
-};
-
 std::vector<Instr> instructions;
 std::set<unsigned char> int_codes = {I_LOAD, I_CMP, I_VAR, I_STORE, I_LOAD_VAR,
 			I_ARRAY,

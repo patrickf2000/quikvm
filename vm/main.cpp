@@ -4,6 +4,8 @@
 
 #include <vm.hh>
 
+#include "disassembler.hh"
+
 int main(int argc, char *argv[]) {
 	if (argc == 1) {
 		std::cout << "Fatal: No input specified!" << std::endl;
@@ -18,6 +20,9 @@ int main(int argc, char *argv[]) {
 			t_monitor = true;
 		} else if (std::string(argv[i]) == "-dm" || std::string(argv[i]) == "--dump-memory") {
 			dump = true;
+		} else if (std::string(argv[i]) == "-ds" || std::string(argv[i]) == "--disassembler") {
+			disassemble(argv[1]);
+			return 0;
 		}
 	}
 	
