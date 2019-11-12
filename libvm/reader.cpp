@@ -11,6 +11,7 @@ BinReader::BinReader(const char *path) {
 	
 	if (!reader.is_open()) {
 		std::cout << "Error: Unable to open input!" << std::endl;
+		std::cout << "PATH: " << path << std::endl;
 		std::exit(1);
 	}
 	

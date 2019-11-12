@@ -56,6 +56,7 @@ void load(const char *path) {
 			cmd += ';';
 			cmd += reader.read_str();
 			lib(cmd);
+			continue;
 		}
 		
 		instructions.push_back(i);
@@ -234,7 +235,15 @@ void run(int pc, bool dump) {
 				} break;
 				
 			case ByteCode::EXIT: break;
-			case ByteCode::LIB: break;
+			case 0: break;
+			default: {
+				std::cout << "Fatal: Unknown instruction." << std::endl;
+				std::cout << "We cannot continue." << std::endl;
+				std::cout << std::endl;
+				std::cout << "Current instruction:" << std::endl;
+				printf("%x\n", i.opcode);
+				break;
+			}
 		}
 		
 		++counter;
