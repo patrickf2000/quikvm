@@ -272,6 +272,12 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 			writer.write_opcode(ByteCode::EXCALL);
 			auto s = arg.substr(1, arg.length()-2);
 			writer.write_str(s.c_str());
+		
+		//Error
+		} else {
+			std::cout << "Fatal Error!" << std::endl;
+			std::cout << "Invalid instruction: " << op << std::endl;
+			std::exit(1);
 		}
 	}
 }
