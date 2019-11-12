@@ -1,8 +1,8 @@
-lib "test>test1:void;void"
-lib "test>test2:int;void"
-lib "test>test3:dec;void"
-lib "test>test_ret:void;int"
-lib "test>test_ret2:int;int"
+lib "qktest>test1:void;void"
+lib "qktest>test2:int;void"
+lib "qktest>test3:dec;void"
+lib "qktest>test_ret:void;int"
+lib "qktest>test_ret2:int;int"
 
 s_load "Testing an external function:"
 s_print

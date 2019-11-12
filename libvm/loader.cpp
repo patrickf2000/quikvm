@@ -12,7 +12,7 @@ std::map<std::string, Func> open_libs;
 //Loads needed libraries
 void lib(std::string cmd) {
 	//Parse input string
-	std::string lib = "libqk";
+	std::string lib = "lib";
 	std::string func_name = "";
 	unsigned char type = cmd[0];
 	unsigned char ret = cmd[1];

@@ -1,4 +1,4 @@
-lib "str>str2int:str;int"
+lib "qkstr>str2int:str;int"
 
 s_load "Converting 10 to int"
 s_print

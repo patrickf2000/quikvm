@@ -1,5 +1,5 @@
-lib "str>test_str_in:str;void"
-lib "str>test_str_ret:void;str"
+lib "qkstr>test_str_in:str;void"
+lib "qkstr>test_str_ret:void;str"
 
 s_load "Testing string library."
 s_print

@@ -1,4 +1,4 @@
-lib "test>test1:void;void"
+lib "qktest>test1:void;void"
 
 s_load "Testing an external function (2):"
 s_print

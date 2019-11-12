@@ -1,4 +1,4 @@
-lib "str>str_len:str;int"
+lib "qkstr>str_len:str;int"
 
 s_load "Input str: Hello!"
 s_print

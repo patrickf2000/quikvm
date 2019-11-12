@@ -1,7 +1,7 @@
-lib "io>open:str;void"
-lib "io>getln:void;str"
-lib "io>is_eof:void;int"
-lib "io>close:void;void"
+lib "qkio>open:str;void"
+lib "qkio>getln:void;str"
+lib "qkio>is_eof:void;int"
+lib "qkio>close:void;void"
 
 s_load "file.txt"
 excall "open"
@@ -12,7 +12,7 @@ lbl read
 	s_pop
 
 	excall "is_eof"
-	i_cmp 1
+	i_cmp 0
 	jne read
 
 lbl done
