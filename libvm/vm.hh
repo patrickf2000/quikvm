@@ -19,6 +19,7 @@ struct Context {
 struct Instr {
 	unsigned char opcode;
 	int i_arg;
+	int i_arg2;
 	double d_arg;
 	std::string s_arg;
 };

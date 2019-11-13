@@ -28,6 +28,7 @@ enum ByteCode {
 	I_INPUT = 0x30,
 	I_POP = 0x31,
 	I_ARRAY = 0x32,
+	I_STORE2 = 0x33,
 	
 	//Double (floating point)
 	D_LOAD = 0x40,

@@ -37,6 +37,9 @@ void load(const char *path) {
 			continue;
 		} else if (int_codes.find(i.opcode) != int_codes.end()) {
 			i.i_arg = reader.read_int();
+		} else if (i.opcode == ByteCode::I_STORE2) {
+			i.i_arg = reader.read_int();
+			i.i_arg2 = reader.read_int();
 		} else if (i.opcode == ByteCode::D_LOAD) {
 			i.d_arg = reader.read_double();
 		} else if (i.opcode == ByteCode::S_LOAD || i.opcode == ByteCode::EXCALL) {
@@ -83,6 +86,12 @@ void run(int pc, bool dump) {
 			case ByteCode::D_VAR: c.memory.insert(std::pair<int, std::string>(i.i_arg, "")); break;
 			case ByteCode::I_STORE: {
 					c.memory[i.i_arg] = std::to_string(c.int_stack.top()); 
+					c.int_stack.pop();
+				} break;
+			case ByteCode::I_STORE2: {
+					int addr = i.i_arg;
+					addr += std::stoi(c.memory[i.i_arg2]);
+					c.memory[addr] = std::to_string(c.int_stack.top());
 					c.int_stack.pop();
 				} break;
 			case ByteCode::I_LOAD_VAR: {

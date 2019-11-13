@@ -61,16 +61,23 @@ void pass1(std::vector<std::string> *contents, bool p1) {
 			ln += std::to_string(symbols.at(arg));
 		} else if (op == "i_store" || op == "i_load_var"
 				|| op == "d_store" || op == "d_load_var") {
-			ln = op + " ";
-			
 			if (arg.find("+") != std::string::npos) {
 				std::string name = strtok((char *)arg.c_str(), "+");
 				std::string offset = strtok(NULL, " ");
-				
 				int addr = vars[name];
-				addr += std::stoi(offset);
-				ln += std::to_string(addr);
+				
+				if (vars.find(offset) != vars.end()) {
+					ln = "i_store2 ";
+					ln += std::to_string(addr);
+					ln += " ";
+					ln += std::to_string(vars[offset]);
+				} else {
+					ln = op + " ";	
+					addr += std::stoi(offset);
+					ln += std::to_string(addr);
+				}
 			} else {
+				ln = op + " ";
 				ln += std::to_string(vars[arg]);
 			}
 		}
@@ -156,6 +163,13 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 		} else if (op == "i_array") {
 			writer.write_opcode(ByteCode::I_ARRAY);
 			writer.write_int(std::stoi(arg));
+		} else if (op == "i_store2") {
+			writer.write_opcode(ByteCode::I_STORE2);
+			
+			std::string p1 = strtok((char *)arg.c_str(), " ");
+			std::string p2 = strtok(NULL, " ");
+			writer.write_int(std::stoi(p1));
+			writer.write_int(std::stoi(p2));
 			
 		//Double operations
 		} else if (op == "d_load") {
