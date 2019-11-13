@@ -58,7 +58,7 @@ void pass1(std::vector<std::string> *contents, bool p1) {
 			|| op == "jl" || op == "jge" || op == "jle" || op == "call"
 			|| op == "new_thread") {
 			ln = op + " ";
-			ln += std::to_string(symbols.at(arg));
+			ln += std::to_string(symbols[arg]);
 		} else if (op == "i_store" || op == "i_load_var"
 				|| op == "i_load_arr"
 				|| op == "d_store" || op == "d_load_var") {

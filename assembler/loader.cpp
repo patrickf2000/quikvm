@@ -28,3 +28,18 @@ std::vector<std::string> load_file(const char *path) {
 	
 	return contents;
 }
+
+std::vector<std::string> load_multiple(std::vector<char *> *paths) {
+	std::vector<std::string> contents;
+	
+	for (int i = 0; i<paths->size(); i++) {
+		auto p = paths->at(i);
+		
+		auto cts = load_file(p);
+		for (auto l : cts) {
+			contents.push_back(l);
+		}
+	}
+	
+	return contents;
+}

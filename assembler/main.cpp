@@ -25,11 +25,17 @@ int main(int argc, char *argv[]) {
 	}
 	
 	//Load the file
-	auto contents = load_file(argv[1]);
+	std::vector<std::string> contents;
+	
+	if (files.size() > 1) {
+		contents = load_multiple(&files);
+	} else {
+		contents = load_file(files[0]);
+	}
 	
 	//Assemble
 	pass1(&contents, p1);
-	pass2(&contents, argv[1]);
+	pass2(&contents, files[0]);
 	
 	return 0;
 }
