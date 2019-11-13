@@ -60,6 +60,7 @@ void pass1(std::vector<std::string> *contents, bool p1) {
 			ln = op + " ";
 			ln += std::to_string(symbols.at(arg));
 		} else if (op == "i_store" || op == "i_load_var"
+				|| op == "i_load_arr"
 				|| op == "d_store" || op == "d_load_var") {
 			if (arg.find("+") != std::string::npos) {
 				std::string name = strtok((char *)arg.c_str(), "+");
@@ -67,10 +68,19 @@ void pass1(std::vector<std::string> *contents, bool p1) {
 				int addr = vars[name];
 				
 				if (vars.find(offset) != vars.end()) {
-					ln = "i_store2 ";
+					if (op == "i_store")
+						ln = "i_store2 ";
+					else if (op == "i_load_arr")
+						ln += "i_load_arr ";
+						
 					ln += std::to_string(addr);
 					ln += " ";
 					ln += std::to_string(vars[offset]);
+				} else if (op == "i_load_arr") {
+					ln = op + " ";
+					ln += std::to_string(addr);
+					ln += " ";
+					ln += offset;
 				} else {
 					ln = op + " ";	
 					addr += std::stoi(offset);
@@ -79,6 +89,9 @@ void pass1(std::vector<std::string> *contents, bool p1) {
 			} else {
 				ln = op + " ";
 				ln += std::to_string(vars[arg]);
+				
+				if (op == "i_load_arr")
+					ln += " 0";
 			}
 		}
 		
@@ -165,6 +178,13 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 			writer.write_int(std::stoi(arg));
 		} else if (op == "i_store2") {
 			writer.write_opcode(ByteCode::I_STORE2);
+			
+			std::string p1 = strtok((char *)arg.c_str(), " ");
+			std::string p2 = strtok(NULL, " ");
+			writer.write_int(std::stoi(p1));
+			writer.write_int(std::stoi(p2));
+		} else if (op == "i_load_arr") {
+			writer.write_opcode(ByteCode::I_LOAD_ARR);
 			
 			std::string p1 = strtok((char *)arg.c_str(), " ");
 			std::string p2 = strtok(NULL, " ");
