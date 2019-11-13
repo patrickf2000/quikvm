@@ -244,7 +244,7 @@ void run(int pc, bool dump) {
 					excall(i.s_arg, &c);
 				} break;
 				
-			case ByteCode::EXIT: break;
+			case ByteCode::EXIT: counter = instructions.size()+1; break;
 			case 0: break;
 			default: {
 				std::cout << "Fatal: Unknown instruction." << std::endl;
