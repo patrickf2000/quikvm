@@ -71,16 +71,11 @@ void pass1(std::vector<std::string> *contents, bool p1) {
 					if (op == "i_store")
 						ln = "i_store2 ";
 					else if (op == "i_load_arr")
-						ln += "i_load_arr ";
+						ln = "i_load_arr2 ";
 						
 					ln += std::to_string(addr);
 					ln += " ";
 					ln += std::to_string(vars[offset]);
-				} else if (op == "i_load_arr") {
-					ln = op + " ";
-					ln += std::to_string(addr);
-					ln += " ";
-					ln += offset;
 				} else {
 					ln = op + " ";	
 					addr += std::stoi(offset);
@@ -185,6 +180,9 @@ void pass2(std::vector<std::string> *contents, std::string path) {
 			writer.write_int(std::stoi(p2));
 		} else if (op == "i_load_arr") {
 			writer.write_opcode(ByteCode::I_LOAD_ARR);
+			writer.write_int(std::stoi(arg));
+		} else if (op == "i_load_arr2") {
+			writer.write_opcode(ByteCode::I_LOAD_ARR2);
 			
 			std::string p1 = strtok((char *)arg.c_str(), " ");
 			std::string p2 = strtok(NULL, " ");

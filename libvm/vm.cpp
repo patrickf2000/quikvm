@@ -17,7 +17,7 @@
 
 std::vector<Instr> instructions;
 std::set<unsigned char> int_codes = {I_LOAD, I_CMP, I_VAR, I_STORE, I_LOAD_VAR,
-			I_ARRAY,
+			I_ARRAY, I_LOAD_ARR,
 			D_CMP, D_VAR, D_STORE, D_LOAD_VAR,
 			JMP, JE, JNE, JG, JL, JGE, JLE,
 			CALL, SLEEP, NEW_THREAD};
@@ -38,7 +38,7 @@ void load(const char *path) {
 		} else if (int_codes.find(i.opcode) != int_codes.end()) {
 			i.i_arg = reader.read_int();
 		} else if (i.opcode == ByteCode::I_STORE2 
-				|| i.opcode == ByteCode::I_LOAD_ARR) {
+				|| i.opcode == ByteCode::I_LOAD_ARR2) {
 			i.i_arg = reader.read_int();
 			i.i_arg2 = reader.read_int();
 		} else if (i.opcode == ByteCode::D_LOAD) {
@@ -95,13 +95,14 @@ void run(int pc, bool dump) {
 					c.memory[addr] = std::to_string(c.int_stack.top());
 					c.int_stack.pop();
 				} break;
+			case ByteCode::I_LOAD_ARR:
 			case ByteCode::I_LOAD_VAR: {
 					int item = std::stoi(c.memory[i.i_arg]);
 					c.int_stack.push(item);
 				} break;
-			case ByteCode::I_LOAD_ARR: {
+			case ByteCode::I_LOAD_ARR2: {
 					int addr = i.i_arg;
-					addr += i.i_arg2;
+					addr += std::stoi(c.memory[i.i_arg2]);
 					int item = std::stoi(c.memory[addr]);
 					c.int_stack.push(item);
 				} break;
