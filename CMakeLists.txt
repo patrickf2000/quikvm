@@ -5,6 +5,7 @@ set(ASM_SRC
 	assembler/main.cpp
 	assembler/writer.cpp
 	assembler/assembler.cpp
+	assembler/loader.cpp
 )
 
 set(LIBVM_SRC
