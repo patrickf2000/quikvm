@@ -3,6 +3,7 @@
 
 #include "loader.hh"
 
+//Load the contents of a file into a vector
 std::vector<std::string> load_file(const char *path) {
 	std::vector<std::string> contents;
 	std::string ln = "";
@@ -29,6 +30,7 @@ std::vector<std::string> load_file(const char *path) {
 	return contents;
 }
 
+//Load multiple files and merge into one vector
 std::vector<std::string> load_multiple(std::vector<char *> *paths) {
 	std::vector<std::string> contents;
 	

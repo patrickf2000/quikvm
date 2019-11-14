@@ -1,11 +1,12 @@
-s_load "Calling function:"
-s_print
-s_pop
+lbl _start
+	s_load "Calling function:"
+	s_print
+	s_pop
 
-call sayHello
+	call sayHello
 
-s_load "Done!"
-s_print
-s_pop
+	s_load "Done!"
+	s_print
+	s_pop
 
-exit
+	exit
