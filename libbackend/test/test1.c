@@ -22,5 +22,8 @@ void main()
 	
 	qkbk_print_dconst(3.14);
 	
+	qkbk_new_dvar("pi", 3.14);
+	qkbk_print_dvar("pi");
+	
 	qkbk_close();
 }
