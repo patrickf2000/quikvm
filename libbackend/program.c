@@ -20,5 +20,7 @@ void qkbk_write_comment(char *ln)
 
 void qkbk_close() 
 {
+	char *exit_ln = "exit\n";
+	fwrite(exit_ln, sizeof(char), strlen(exit_ln), fp);
 	fclose(fp);
 }
