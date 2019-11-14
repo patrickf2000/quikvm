@@ -2,6 +2,7 @@
 
 #include <program.h>
 #include <str.h>
+#include <vars.h>
 
 void main()
 {
@@ -12,6 +13,9 @@ void main()
 	qkbk_print_str("Hello!");
 	qkbk_print_str("Welcome to Quik!");
 	qkbk_print_nl();
+	
+	qkbk_new_ivar("x", 22);
+	qkbk_print_ivar("x");
 	
 	qkbk_close();
 }

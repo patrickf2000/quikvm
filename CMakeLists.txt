@@ -17,6 +17,7 @@ set(LIBVM_SRC
 set(LIBBACK_SRC
 	libbackend/program.c
 	libbackend/str.c
+	libbackend/vars.c
 )
 
 set(VM_SRC
