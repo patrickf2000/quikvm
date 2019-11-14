@@ -17,5 +17,7 @@ void main()
 	qkbk_new_ivar("x", 22);
 	qkbk_print_ivar("x");
 	
+	qkbk_print_iconst(15);
+	
 	qkbk_close();
 }

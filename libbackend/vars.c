@@ -23,9 +23,11 @@ void qkbk_new_ivar(char *name, int val)
 }
 
 //Prints a constant value
-void qkbk_print_const(int val)
+void qkbk_print_iconst(int val)
 {
-
+	qkbk_write_str("i_load ");
+	qkbk_write_int(val);
+	qkbk_write_str("\ni_print\ni_pop\n");
 }
 
 //Prints a variable value
