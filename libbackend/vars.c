@@ -39,3 +39,11 @@ void qkbk_print_ivar(char *name)
 
 	qkbk_write_str("i_print\n");
 }
+
+//Prints a floating-point constant
+void qkbk_print_dconst(double val)
+{
+	qkbk_write_str("d_load ");
+	qkbk_write_dec(val);
+	qkbk_write_str("\nd_print\nd_pop\n");
+}

@@ -19,6 +19,12 @@ void qkbk_write_int(int i)
 	fwrite(buf, sizeof(char), 5, fp);
 }
 
+//Write a floating-point integer
+void qkbk_write_dec(double d)
+{
+	fprintf(fp, "%f", d);
+}
+
 //Write a newline
 void qkbk_write_nl()
 {

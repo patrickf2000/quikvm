@@ -18,6 +18,9 @@ void main()
 	qkbk_print_ivar("x");
 	
 	qkbk_print_iconst(15);
+	qkbk_print_nl();
+	
+	qkbk_print_dconst(3.14);
 	
 	qkbk_close();
 }
