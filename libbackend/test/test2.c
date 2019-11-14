@@ -25,5 +25,23 @@ void main()
 	qkbk_iadd("x2", "result", "x3");
 	qkbk_print_ivar("x3");
 	
+	qkbk_print_nl();
+	
+	qkbk_new_ivar("no", 0);
+	qkbk_iadd("2", "2", "no");
+	qkbk_print_ivar("no");
+	
+	qkbk_isub("2", "10", "no");
+	qkbk_print_ivar("no");
+	
+	qkbk_imul("2", "10", "no");
+	qkbk_print_ivar("no");
+	
+	qkbk_idiv("2", "10", "no");
+	qkbk_print_ivar("no");
+	
+	qkbk_imod("2", "10", "no");
+	qkbk_print_ivar("no");
+	
 	qkbk_close();
 }
