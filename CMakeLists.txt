@@ -18,6 +18,7 @@ set(LIBBACK_SRC
 	libbackend/program.c
 	libbackend/str.c
 	libbackend/vars.c
+	libbackend/math.c
 )
 
 set(VM_SRC
