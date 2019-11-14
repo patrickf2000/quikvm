@@ -14,6 +14,10 @@ set(LIBVM_SRC
 	libvm/loader.cpp
 )
 
+set(LIBBACK_SRC
+	libbackend/program.c
+)
+
 set(VM_SRC
 	vm/main.cpp
 	vm/disassembler.cpp
@@ -25,11 +29,15 @@ add_compile_options(-std=c++11 -g)
 
 include_directories(common)
 include_directories(libvm)
+include_directories(libbackend)
 
 add_library(qkvml ${LIBVM_SRC})
+add_library(qkbackend SHARED ${LIBBACK_SRC})
 
 add_executable(qkasm ${ASM_SRC})
 add_executable(qkvm ${VM_SRC})
+
+add_executable(qktest1 libbackend/test/test1.c)
 
 add_library(qktest SHARED stdlib/test.c)
 add_library(qkstr SHARED stdlib/str.c)
@@ -37,4 +45,6 @@ add_library(qkio SHARED stdlib/io.c)
 
 target_link_libraries(qkvml pthread dl)
 target_link_libraries(qkvm qkvml)
+
+target_link_libraries(qktest1 qkbackend)
 
